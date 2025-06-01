@@ -1,0 +1,4 @@
+<UXML xmlns="UnityEngine.UIElements" editor-extension-mode="False">
+    <Label text="Dialogue Editor" />
+    <Button text="Add Node" />
+</UXML>
