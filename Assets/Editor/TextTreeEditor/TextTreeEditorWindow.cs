@@ -141,8 +141,13 @@ public class TextTreeEditorWindow : EditorWindow
 
             if (cursorElement.visible)
             {
-                node.style.left = cursorElement.resolvedStyle.left + cursorElement.resolvedStyle.width * 0.5f;
-                node.style.top = cursorElement.resolvedStyle.top - cursorElement.resolvedStyle.height;
+                Vector3 t = contentAreaElement.resolvedStyle.translate;
+
+                float localX = cursorElement.resolvedStyle.left - t.x;
+                float localY = cursorElement.resolvedStyle.top - t.y;
+
+                node.style.left = localX + cursorElement.resolvedStyle.width * 0.5f;
+                node.style.top = localY - cursorElement.resolvedStyle.height;
             }
             else
             {
