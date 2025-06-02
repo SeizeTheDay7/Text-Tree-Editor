@@ -1,5 +1,4 @@
 <UXML xmlns="UnityEngine.UIElements" editor-extension-mode="False">
-<!-- <Style src="TextTreeEditorWindow.uss" /> -->
+    <Style src="TextTreeEditorWindow.uss" />
     <Button name="addNodeButton" text="Add Node" />
-    <VisualElement name="contentArea" />
 </UXML>

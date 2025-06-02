@@ -5,9 +5,13 @@ using UnityEngine.UIElements;
 public class TextTreeEditorWindow : EditorWindow
 {
     private VisualElement cursorElement;
+    private VisualElement backgroundElement;
+    private VisualElement contentAreaElement;
+    private Button addNodeButton;
     bool showCursor = false;
     private bool isPanning = false;
-    private Vector2 panStartPos;
+    private Vector2 panStartMouse;
+    private Vector2 panStartContentPos;
 
     [MenuItem("Window/TextTree Editor")]
     public static void ShowWindow()
@@ -21,9 +25,13 @@ public class TextTreeEditorWindow : EditorWindow
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/TextTreeEditor/TextTreeEditorWindow.uxml");
         visualTree.CloneTree(rootVisualElement);
 
-        SetCursor();
         SetClickBackground();
-        SetAddNodeButton();
+        SetContentArea();
+        SetCursor();
+
+        BackgroundEvent();
+        ContentAreaEvent();
+        AddNodeButtonEvent();
     }
 
     private void SetCursor()
@@ -40,27 +48,31 @@ public class TextTreeEditorWindow : EditorWindow
         rootVisualElement.Add(cursorElement);
     }
 
-
     private void SetClickBackground()
     {
-        var background = new VisualElement();
-        background.style.flexGrow = 1;
-        rootVisualElement.Add(background);
+        backgroundElement = new VisualElement();
+        backgroundElement.AddToClassList("background");
+        backgroundElement.style.flexGrow = 1;
+        rootVisualElement.Add(backgroundElement);
+    }
 
-        BackgroundClickEvent(background);
+    private void SetContentArea()
+    {
+        contentAreaElement = new VisualElement();
+        contentAreaElement.AddToClassList("contentArea");
+        backgroundElement.Add(contentAreaElement);
     }
 
     /// <summary>
-    /// Left click : cursor goes to the position
-    /// Right click : pan the screen
+    /// Left click to set cursor
     /// </summary>
-    private void BackgroundClickEvent(VisualElement background)
+    private void BackgroundEvent()
     {
-        background.RegisterCallback<MouseDownEvent>(evt =>
+        backgroundElement.RegisterCallback<MouseDownEvent>(evt =>
         {
-            if (evt.button == 0) // left click event
+            if (evt.button == 0) // left click
             {
-                Vector2 world = background.LocalToWorld(evt.localMousePosition);
+                Vector2 world = backgroundElement.LocalToWorld(evt.localMousePosition);
                 Vector2 rootPos = rootVisualElement.WorldToLocal(world);
 
                 float adjustedX = rootPos.x - (cursorElement.resolvedStyle.width * 0.5f);
@@ -70,57 +82,56 @@ public class TextTreeEditorWindow : EditorWindow
                 cursorElement.style.top = adjustedY;
                 cursorElement.style.visibility = Visibility.Visible;
             }
-            else if (evt.button == 1) // right click event - start pan
+        });
+    }
+
+    /// <summary>
+    /// Right click to pan the screen
+    /// </summary>
+    private void ContentAreaEvent()
+    {
+        backgroundElement.RegisterCallback<MouseDownEvent>(evt =>
+        {
+            if (evt.button == 1) // right click
             {
                 isPanning = true;
-                panStartPos = evt.localMousePosition;
+                panStartMouse = evt.mousePosition;
+                Vector3 startTranslate = contentAreaElement.resolvedStyle.translate;
+                panStartContentPos = new Vector2(startTranslate.x, startTranslate.y);
+                backgroundElement.CaptureMouse(); // keep focus when got outside of the window
+                evt.StopPropagation();
             }
         });
 
-        // background.RegisterCallback<MouseMoveEvent>(evt =>
-        // {
-        //     if (isPanning)
-        //     {
-        //         Vector2 delta = evt.localMousePosition - panStartPos;
-        //         panStartPos = evt.localMousePosition;
+        backgroundElement.RegisterCallback<MouseMoveEvent>(evt =>
+        {
+            if (!isPanning) return;
 
-        //         // Apply pan by adjusting scroll position or element translation
-        //         // Example: moving the content element
-        //         var content = background.Q("Content"); // replace with your actual movable element name
-        //         if (content != null)
-        //         {
-        //             float newLeft = content.style.left.value + delta.x;
-        //             float newTop = content.style.top.value + delta.y;
+            Vector2 delta = evt.mousePosition - panStartMouse;
+            Vector2 newOffset = panStartContentPos + delta;
 
-        //             content.style.left = newLeft;
-        //             content.style.top = newTop;
-        //         }
-        //     }
-        // });
+            contentAreaElement.style.translate = new Translate(newOffset.x, newOffset.y);
+        });
 
-        // background.RegisterCallback<MouseUpEvent>(evt =>
-        // {
-        //     if (evt.button == 1 && isPanning)
-        //     {
-        //         isPanning = false; // stop panning on right mouse release
-        //     }
-        // });
-    }
-
-    private void SetAddNodeButton()
-    {
-        var addButton = rootVisualElement.Q<Button>("addNodeButton");
-        if (addButton == null) { Debug.LogError("Button 'addNodeButton' not found!"); return; }
-
-        AddNodeButtonEvent(addButton);
+        backgroundElement.RegisterCallback<MouseUpEvent>(evt =>
+        {
+            if (evt.button == 1 && isPanning)
+            {
+                isPanning = false;
+                backgroundElement.ReleaseMouse(); // stop event capturing for this window
+            }
+        });
     }
 
     /// <summary>
     /// Add node at the cursor point (or init point if there's no cursor)
     /// </summary>
-    private void AddNodeButtonEvent(Button addButton)
+    private void AddNodeButtonEvent()
     {
-        addButton.clicked += () =>
+        addNodeButton = rootVisualElement.Q<Button>("addNodeButton");
+        if (addNodeButton == null) { Debug.LogError("Button 'addNodeButton' not found!"); return; }
+
+        addNodeButton.clicked += () =>
         {
             var node = new VisualElement();
             node.style.width = 150;
@@ -130,11 +141,8 @@ public class TextTreeEditorWindow : EditorWindow
 
             if (cursorElement.visible)
             {
-                rootVisualElement.schedule.Execute(() =>
-                {
-                    node.style.left = cursorElement.resolvedStyle.left;
-                    node.style.top = cursorElement.resolvedStyle.top;
-                }).ExecuteLater(0);
+                node.style.left = cursorElement.resolvedStyle.left + cursorElement.resolvedStyle.width * 0.5f;
+                node.style.top = cursorElement.resolvedStyle.top - cursorElement.resolvedStyle.height;
             }
             else
             {
@@ -145,7 +153,7 @@ public class TextTreeEditorWindow : EditorWindow
             var label = new Label("test");
             node.Add(label);
 
-            rootVisualElement.Add(node);
+            contentAreaElement.Add(node);
         };
     }
 }
