@@ -119,6 +119,54 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &17825779
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 17825781}
+  - component: {fileID: 17825780}
+  m_Layer: 0
+  m_Name: InteractionManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &17825780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17825779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd470e6c163e1dd49a207256aeed9a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hold_time_ref: 2
+  hold_dist_lim: 200
+  drag_dist_ref: 500
+  drag_time_lim: 1
+--- !u!4 &17825781
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17825779}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1858.6626, y: 1189.0865, z: -14.404217}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +399,7 @@ GameObject:
   - component: {fileID: 1211860520}
   - component: {fileID: 1211860519}
   m_Layer: 0
-  m_Name: DialogueManager
+  m_Name: NarrationManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,7 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4d8d453c7d24894aaa881231bb5f0f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter1: {fileID: 11400000, guid: 67871ed603695284da5f72779de5d9ec, type: 2}
+  startScript: {fileID: 11400000, guid: 67871ed603695284da5f72779de5d9ec, type: 2}
   typewriter: {fileID: 1365568753}
 --- !u!4 &1211860520
 Transform:
@@ -540,7 +588,7 @@ MonoBehaviour:
   typewriterStartsAutomatically: 0
   animationLoop: 0
   timeScale: 0
-  _text: "\uCC28\uADFC\uCC28\uADFC \uB9CC\uB4E4\uC5B4\uBD05\uC2DC\uB2E4."
+  _text: "\uCC28\uADFC\uCC28\uADFC \uB9CC\uB4E4\uAE30"
   useDynamicScaling: 1
   referenceFontSize: 10
   isResettingTimeOnNewText: 1
@@ -625,7 +673,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7c6ec8f8927db704eabc54035ca93099, type: 3}
   m_Resource: {fileID: 8300000, guid: 7c6ec8f8927db704eabc54035ca93099, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1043,5 +1091,6 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1976784288}
   - {fileID: 1211860520}
+  - {fileID: 17825781}
   - {fileID: 1838218118}
   - {fileID: 1970218388}
