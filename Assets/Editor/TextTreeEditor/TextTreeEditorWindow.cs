@@ -8,7 +8,6 @@ public class TextTreeEditorWindow : EditorWindow
     private VisualElement backgroundElement;
     private VisualElement contentAreaElement;
     private Button addNodeButton;
-    bool showCursor = false;
     private bool isPanning = false;
     private Vector2 panStartMouse;
     private Vector2 panStartContentPos;
