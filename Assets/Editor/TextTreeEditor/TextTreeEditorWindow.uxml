@@ -1,4 +1,0 @@
-<UXML xmlns="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="TextTreeEditorWindow.uss" />
-    <Button name="addNodeButton" text="Add Node" />
-</UXML>

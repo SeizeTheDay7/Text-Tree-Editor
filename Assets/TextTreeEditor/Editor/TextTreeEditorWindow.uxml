@@ -1,0 +1,9 @@
+<UXML xmlns="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/TextTreeEditor/Editor/TextTreeEditorWindow.uss?fileID=7433441132597879392&amp;guid=f219a94e2e27b164d967e9e927b382fd&amp;type=3#TextTreeEditorWindow" />
+    <VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1;">
+        <VisualElement name="Background" style="flex-grow: 1;" />
+        <VisualElement name="UIPanel" style="border-left-width: 1px; border-top-width: 0; border-left-color: rgb(111, 111, 111); border-right-color: rgb(111, 111, 111); border-top-color: rgb(111, 111, 111); border-bottom-color: rgb(111, 111, 111); border-right-width: 0; border-bottom-width: 0;">
+            <Button text="Add Node" name="addNodeButton" />
+        </VisualElement>
+    </VisualElement>
+</UXML>
