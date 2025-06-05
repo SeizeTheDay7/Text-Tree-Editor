@@ -34,6 +34,10 @@
 #UIPanel {
     right: 0;
     top: 0;
-    width: 300px;
+    width: 500px;
     height: 100%;    
+}
+
+#NodeText {
+    height: 300px;
 }

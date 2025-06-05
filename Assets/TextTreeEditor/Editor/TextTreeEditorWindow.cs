@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using Codice.CM.Common.Merge;
+using NUnit.Framework;
 
-public class TextTreeEditorWindow : EditorWindow
+public partial class TextTreeEditorWindow : EditorWindow
 {
     private VisualElement backgroundElement;
     private VisualElement contentLayerElement;
@@ -14,8 +15,6 @@ public class TextTreeEditorWindow : EditorWindow
     private Vector2 panStartMouse;
     private Vector2 panStartContentPos;
     private VisualElement currentSelectNode;
-    private EventCallback<MouseMoveEvent> _onMouseMoveCallback;
-    private Vector2 currentMousePos;
     private ConnectionElement currentConnection;
 
 
@@ -31,7 +30,7 @@ public class TextTreeEditorWindow : EditorWindow
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/TextTreeEditor/Editor/TextTreeEditorWindow.uxml");
         visualTree.CloneTree(rootVisualElement);
 
-        _onMouseMoveCallback = UpdateLine;
+        SetUI();
 
         // Do not change the order of these
         SetClickBackground();
@@ -259,10 +258,6 @@ public class TextTreeEditorWindow : EditorWindow
         if (currentConnection == null) return;
         currentConnection.UpdateLine(evt.localMousePosition);
     }
-
-    #endregion
-
-    #region UI
 
     #endregion
 }
