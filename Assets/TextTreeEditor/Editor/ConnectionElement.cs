@@ -4,31 +4,28 @@ using UnityEngine.UIElements;
 internal sealed class ConnectionElement : VisualElement
 {
     public readonly VisualElement fromNode;
-    private readonly VisualElement _bg;
-    private readonly VisualElement _root;
-    private VisualElement _toNode;
-    private Vector2 _tempLocal;
-    private bool _isTemp = true;
+    private readonly VisualElement background;
+    private readonly VisualElement contentLayer;
+    private VisualElement toNode;
+    private Vector2 mousePosition;
 
-    public ConnectionElement(VisualElement from, VisualElement root, VisualElement bg)
+    public ConnectionElement(VisualElement from, VisualElement contentLayer, VisualElement background)
     {
         fromNode = from;
-        _root = root;
-        _bg = bg;
-        pickingMode = PickingMode.Ignore;
+        this.contentLayer = contentLayer;
+        this.background = background;
         name = "connection";
         generateVisualContent += OnGenerate;
     }
 
     public void UpdateLine(Vector2 mouseLocalInBg)
     {
-        _tempLocal = _root.WorldToLocal(_bg.LocalToWorld(mouseLocalInBg));
+        mousePosition = contentLayer.WorldToLocal(background.LocalToWorld(mouseLocalInBg));
         MarkDirtyRepaint();
     }
     public void ConfirmConnection(VisualElement to)
     {
-        _toNode = to;
-        _isTemp = false;
+        toNode = to;
         MarkDirtyRepaint();
     }
 
@@ -37,22 +34,24 @@ internal sealed class ConnectionElement : VisualElement
         var p = ctx.painter2D;
         p.lineWidth = 2;
         p.strokeColor = Color.white;
-        p.fillColor = Color.white;               // ✓ 모든 버전 동일
+        p.fillColor = Color.white;
 
-        // ── 좌표
-        Vector2 start = _root.WorldToLocal(fromNode.worldBound.center);
-        Vector2 end = _isTemp ? _tempLocal
-                                : _root.WorldToLocal(_toNode.worldBound.center);
+        // coordinate
+        Vector2 start = contentLayer.WorldToLocal(new Vector2(fromNode.worldBound.center.x, fromNode.worldBound.yMax));
+        Vector2 end = (toNode == null)
+            ? mousePosition
+            : contentLayer.WorldToLocal(new Vector2(toNode.worldBound.center.x, toNode.worldBound.yMin));
 
-        // ── 베지어
-        Vector2 h = new(Mathf.Abs(end.x - start.x) * .5f, 0);
+        // line
         p.BeginPath();
         p.MoveTo(start);
-        p.BezierCurveTo(start + h, end - h, end);
+        p.LineTo(end);
         p.Stroke();
+        // Vector2 h = new(Mathf.Abs(end.x - start.x) * .5f, 0);
+        // p.BezierCurveTo(start + h, end - h, end);
 
-        // ── 화살촉
-        const float head = 6f;
+        // arrowhead
+        const float head = 10f; // Increased from 6f to 10f
         Vector2 dir = (end - start).normalized;
         Vector2 n = new(-dir.y, dir.x);
 
