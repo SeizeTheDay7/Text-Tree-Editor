@@ -1,20 +1,33 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
+
 
 [Serializable]
-public class TextNode
+public class SerializedList<T>
 {
-    public Guid key;
+    public List<T> items;
+
+    public SerializedList(List<T> items)
+    {
+        this.items = items;
+    }
+}
+
+[Serializable]
+public class TextNodeData
+{
+    public string key;
     public string text;
     public Vector2 position;
-    public TextEdge[] nextNodes;
+    public List<TextEdge> nextNodes;
 }
 
 [Serializable]
 public class TextEdge
 {
-    public Guid nextKey;
-    public Condition[] condArr;
+    public string nextKey;
+    public List<Condition> condArr;
 }
 
 [Serializable]

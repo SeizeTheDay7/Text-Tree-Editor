@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    public TextNode textNode;
+    public TextNodeData textNode;
     public TestEnum testEnum;
     public TestEnum testEnum2;
 }

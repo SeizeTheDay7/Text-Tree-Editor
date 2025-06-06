@@ -3,9 +3,9 @@ using UnityEngine.UIElements;
 
 internal sealed class ConnectionElement : VisualElement
 {
-    public readonly VisualElement fromNode;
-    private readonly VisualElement background;
-    private readonly VisualElement contentLayer;
+    public VisualElement fromNode;
+    private VisualElement background;
+    private VisualElement contentLayer;
     private VisualElement toNode;
     private Vector2 mousePosition;
 

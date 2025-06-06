@@ -1,8 +1,6 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using Codice.CM.Common.Merge;
-using NUnit.Framework;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
@@ -14,7 +12,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     private bool isPanning = false;
     private Vector2 panStartMouse;
     private Vector2 panStartContentPos;
-    private VisualElement currentSelectNode;
+    private NodeElement currentSelectNode;
     private ConnectionElement currentConnection;
 
 
@@ -30,6 +28,9 @@ public partial class TextTreeEditorWindow : EditorWindow
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/TextTreeEditor/Editor/TextTreeEditorWindow.uxml");
         visualTree.CloneTree(rootVisualElement);
 
+        DebugButtonEvent();
+
+        // TextTreeEditorWindow_UI.cs
         SetUI();
 
         // Do not change the order of these
@@ -40,7 +41,16 @@ public partial class TextTreeEditorWindow : EditorWindow
 
         CursorEvent();
         PanningEvent();
+
+        // TextTreeEditorWindow_Node.cs
         AddNodeEvent();
+    }
+
+    private void DebugButtonEvent()
+    {
+        var debugButton = rootVisualElement.Q<Button>("Debug");
+        if (debugButton == null) { Debug.Log("Button 'debugButton' not found!"); return; }
+        // debugButton.clicked += () => JSONManager.CreateNewField();
     }
 
     #region VisualElement
@@ -145,88 +155,6 @@ public partial class TextTreeEditorWindow : EditorWindow
                 backgroundElement.ReleaseMouse(); // stop event capturing for this window
             }
         });
-    }
-
-    /// <summary>
-    /// Add node at the cursor point (or init point if there's no cursor)
-    /// </summary>
-    private void AddNodeEvent()
-    {
-        addNodeButton = rootVisualElement.Q<Button>("addNodeButton");
-        if (addNodeButton == null) { Debug.LogError("Button 'addNodeButton' not found!"); return; }
-        addNodeButton.clicked += () => { AddNode(); };
-    }
-
-    private void AddNode()
-    {
-        var node = new VisualElement();
-        node.AddToClassList("Node");
-
-        if (cursorElement.visible)
-        {
-            Vector3 t = contentLayerElement.resolvedStyle.translate;
-
-            float localX = cursorElement.resolvedStyle.left - t.x;
-            float localY = cursorElement.resolvedStyle.top - t.y;
-
-            node.style.left = localX + cursorElement.resolvedStyle.width * 0.5f;
-            node.style.top = localY + cursorElement.resolvedStyle.height * 0.5f;
-        }
-        else
-        {
-            node.style.left = 200; // x coord
-            node.style.top = 100; // y coord
-        }
-
-        var label = new Label("test");
-        node.Add(label);
-
-        SetNodeEvent(node);
-        contentLayerElement.Add(node);
-    }
-
-    /// <summary>
-    /// 1. Left click to select node
-    /// 2. Right click to create new connection
-    /// 3. Left click to connect two nodes
-    /// </summary>
-    private void SetNodeEvent(VisualElement node)
-    {
-        node.RegisterCallback<MouseDownEvent>(evt =>
-        {
-            if (evt.button == 0 && currentConnection != null && currentConnection.fromNode != node)
-            {
-                ConfirmConnection(node);
-            }
-            if (evt.button == 0)
-            {
-                DeselectCurrentNode();
-                SelectNode(node);
-                evt.StopPropagation();
-            }
-        });
-
-        var manipulator = new ContextualMenuManipulator(evt =>
-        {
-            evt.menu.AppendAction("Create Connection", a =>
-            {
-                MakeNewConnection(node);
-            });
-        });
-
-        node.AddManipulator(manipulator);
-    }
-
-    private void SelectNode(VisualElement node)
-    {
-        currentSelectNode = node;
-        currentSelectNode.AddToClassList("highlighted");
-    }
-
-    private void DeselectCurrentNode()
-    {
-        if (currentSelectNode != null) { currentSelectNode.RemoveFromClassList("highlighted"); }
-        currentSelectNode = null;
     }
 
     private void MakeNewConnection(VisualElement fromNode)
