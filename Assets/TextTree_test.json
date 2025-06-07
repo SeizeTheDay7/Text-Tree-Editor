@@ -1,29 +1,38 @@
 {
     "items": [
         {
-            "key": "29287e1d-f65e-4881-8467-073b5693047c",
-            "text": "asdf",
+            "key": "1fddb156-decd-430f-b16e-bc9d74766db5",
+            "text": "sdx",
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": 363.66668701171877,
+                "y": 233.33334350585938
+            },
+            "nextNodes": []
+        },
+        {
+            "key": "b0d175c0-4d3f-4d90-8002-a12c927c312a",
+            "text": "xcbx",
+            "position": {
+                "x": 221.3333282470703,
+                "y": 120.0
             },
             "nextNodes": [
                 {
-                    "nextKey": "77581b85-7ae3-4e13-b5e6-8d2d241c273e",
+                    "nextKey": "1fddb156-decd-430f-b16e-bc9d74766db5",
                     "condArr": []
                 }
             ]
         },
         {
-            "key": "77581b85-7ae3-4e13-b5e6-8d2d241c273e",
-            "text": "zzz",
+            "key": "4ffb7223-0820-4fb0-8299-adea58b1ef8b",
+            "text": "",
             "position": {
-                "x": 0.0,
-                "y": 0.0
+                "x": -210.00001525878907,
+                "y": 30.0
             },
             "nextNodes": [
                 {
-                    "nextKey": "29287e1d-f65e-4881-8467-073b5693047c",
+                    "nextKey": "b0d175c0-4d3f-4d90-8002-a12c927c312a",
                     "condArr": []
                 }
             ]

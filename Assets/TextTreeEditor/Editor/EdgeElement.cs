@@ -5,15 +5,27 @@ using System.Collections.Generic;
 internal sealed class EdgeElement : VisualElement
 {
     private VisualElement background;
-    private VisualElement contentLayer;
+    private VisualElement edgeLayer;
     public NodeElement fromNode;
     private NodeElement toNode;
     private Vector2 mousePosition;
 
-    public EdgeElement(NodeElement from, VisualElement contentLayer, VisualElement background)
+    // Constructor for new edge
+    public EdgeElement(NodeElement from, VisualElement edgeLayer, VisualElement background)
     {
         fromNode = from;
-        this.contentLayer = contentLayer;
+        this.edgeLayer = edgeLayer;
+        this.background = background;
+        name = "edge";
+        generateVisualContent += OnGenerate;
+    }
+
+    // Constructor for loaded edge
+    public EdgeElement(NodeElement from, NodeElement to, VisualElement edgeLayer, VisualElement background)
+    {
+        fromNode = from;
+        toNode = to;
+        this.edgeLayer = edgeLayer;
         this.background = background;
         name = "edge";
         generateVisualContent += OnGenerate;
@@ -21,7 +33,7 @@ internal sealed class EdgeElement : VisualElement
 
     public void UpdateLine(Vector2 mouseLocalInBg)
     {
-        mousePosition = contentLayer.WorldToLocal(background.LocalToWorld(mouseLocalInBg));
+        mousePosition = edgeLayer.WorldToLocal(background.LocalToWorld(mouseLocalInBg));
         MarkDirtyRepaint();
     }
     public void ConfirmEdge(NodeElement to)
@@ -43,10 +55,10 @@ internal sealed class EdgeElement : VisualElement
         p.fillColor = Color.white;
 
         // coordinate
-        Vector2 start = contentLayer.WorldToLocal(new Vector2(fromNode.worldBound.center.x, fromNode.worldBound.yMax));
+        Vector2 start = edgeLayer.WorldToLocal(new Vector2(fromNode.worldBound.center.x, fromNode.worldBound.yMax));
         Vector2 end = (toNode == null)
             ? mousePosition
-            : contentLayer.WorldToLocal(new Vector2(toNode.worldBound.center.x, toNode.worldBound.yMin));
+            : edgeLayer.WorldToLocal(new Vector2(toNode.worldBound.center.x, toNode.worldBound.yMin));
 
         // line
         p.BeginPath();

@@ -6,6 +6,8 @@ using System;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
+    bool isNodeMoving = false;
+
     /// <summary>
     /// Add node at the cursor point (or init point if there's no visible cursor)
     /// </summary>
@@ -19,15 +21,15 @@ public partial class TextTreeEditorWindow : EditorWindow
     private void AddNode()
     {
         if (textTreeField.value == null) { Debug.Log("No text tree loaded"); return; }
-        var node = new NodeElement(contentLayerElement, cursorElement, isNew: true);
+        var node = new NodeElement(contentLayerElement, cursorElement);
         AddNewNodeToTextTree(node);
 
         SetNodeEvent(node);
-        contentLayerElement.Add(node);
+        nodeLayerElement.Add(node);
     }
 
     /// <summary>
-    /// Add new node to text tree list
+    /// Add new node to text tree dict
     /// </summary>
     private void AddNewNodeToTextTree(NodeElement node)
     {
@@ -37,7 +39,10 @@ public partial class TextTreeEditorWindow : EditorWindow
         {
             key = Guid.NewGuid().ToString(),
             text = "",
-            position = node.resolvedStyle.left * Vector2.right + node.resolvedStyle.top * Vector2.up,
+            position = new Vector2(
+                node.style.left.value.value,
+                node.style.top.value.value
+            ),
             nextNodes = new List<TextEdge>()
         };
 
@@ -59,8 +64,10 @@ public partial class TextTreeEditorWindow : EditorWindow
             {
                 ConfirmEdge(node);
             }
-            if (evt.button == 0)
+            else if (evt.button == 0)
             {
+                isNodeMoving = true;
+
                 DeselectCurrentNode();
                 SelectNode(node);
                 evt.StopPropagation();

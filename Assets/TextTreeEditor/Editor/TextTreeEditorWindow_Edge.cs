@@ -5,7 +5,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private void MakeNewEdge(NodeElement fromNode)
     {
-        currentEdge = new EdgeElement(fromNode, contentLayerElement, backgroundElement);
+        currentEdge = new EdgeElement(fromNode, edgeLayerElement, backgroundElement);
         BeginEdgeMoving();
         edgeLayerElement.Add(currentEdge);
     }

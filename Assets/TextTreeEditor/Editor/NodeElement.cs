@@ -5,7 +5,8 @@ internal sealed class NodeElement : VisualElement
 {
     public TextNodeData textNodeData;
 
-    public NodeElement(VisualElement contentLayer, VisualElement cursor, bool isNew)
+    // Constructor for new node at cursor position
+    public NodeElement(VisualElement contentLayer, VisualElement cursor)
     {
         if (cursor.visible)
         {
@@ -14,20 +15,29 @@ internal sealed class NodeElement : VisualElement
             float localX = cursor.resolvedStyle.left - t.x;
             float localY = cursor.resolvedStyle.top - t.y;
 
-            this.style.left = localX + cursor.resolvedStyle.width * 0.5f;
-            this.style.top = localY + cursor.resolvedStyle.height * 0.5f;
+            style.left = localX + cursor.resolvedStyle.width * 0.5f;
+            style.top = localY + cursor.resolvedStyle.height * 0.5f;
         }
         else
         {
-            this.style.left = 200; // x coord
-            this.style.top = 100; // y coord
+            style.left = 200; // x coord
+            style.top = 100; // y coord
         }
+
+        textNodeData = new TextNodeData();
 
         // TODO :: need to add placeholder text
 
-        this.AddToClassList("Node");
+        AddToClassList("Node");
+    }
 
-        if (isNew) textNodeData = new TextNodeData();
-        // else textNode = 
+    // Constructor for loaded node from file
+    public NodeElement(Vector2 pos, TextNodeData dataFromFile)
+    {
+        textNodeData = dataFromFile;
+        style.left = pos.x;
+        style.top = pos.y;
+
+        AddToClassList("Node");
     }
 }

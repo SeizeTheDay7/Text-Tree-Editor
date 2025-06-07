@@ -47,14 +47,54 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         textTreeField.RegisterValueChangedCallback(evt =>
         {
-            if (evt.newValue == null) { Debug.LogError("Text tree load failed"); return; }
-            textTreeDataDict = new Dictionary<string, TextNodeData>();
-            // LoadTextTreeData(evt.newValue as TextAsset);
+            contentLayerElement.style.translate = new StyleTranslate(new Translate(0, 0, 0));
+            nodeLayerElement.Clear();
+            edgeLayerElement.Clear();
+            if (evt.newValue == null) { return; }
+
+            textTreeDataDict = JSONManager.LoadJsonToDict(evt.newValue as TextAsset);
+            if (textTreeDataDict == null) { Debug.LogError("Failed to load text tree data"); return; }
+            InitContentLayer();
 
             currentSelectNode = null;
             currentEdge = null;
             nodeTextField.value = "";
         });
+    }
+
+    private void InitContentLayer()
+    {
+        if (textTreeDataDict == null) return;
+        LoadNode(); // Calls LoadEdge() at the end
+    }
+
+    private void LoadNode()
+    {
+        var tempNodeElementDict = new Dictionary<string, NodeElement>();
+        foreach (var kvp in textTreeDataDict) // kvp : key value pair
+        {
+            var nodeElement = new NodeElement(kvp.Value.position, kvp.Value);
+            SetNodeEvent(nodeElement);
+            nodeLayerElement.Add(nodeElement);
+            tempNodeElementDict[kvp.Key] = nodeElement;
+        }
+
+        LoadEdge(tempNodeElementDict);
+    }
+
+    private void LoadEdge(Dictionary<string, NodeElement> tempNodeElementDict)
+    {
+        foreach (var kvp in textTreeDataDict)
+        {
+            var textNodeData = kvp.Value;
+            var fromNode = tempNodeElementDict[textNodeData.key];
+            foreach (var edge in textNodeData.nextNodes)
+            {
+                var toNode = tempNodeElementDict[edge.nextKey];
+                var edgeElement = new EdgeElement(fromNode, toNode, edgeLayerElement, backgroundElement);
+                edgeLayerElement.Add(edgeElement);
+            }
+        }
     }
 
     /// <summary>
@@ -74,7 +114,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         var newTextTreeButton = rootVisualElement.Q<Button>("NewTextTreeButton");
         if (newTextTreeButton == null) Debug.LogError("NewTextTreeButton not found");
 
-        newTextTreeButton.clicked += () => JSONManager.CreateNewField(textTreeField);
+        newTextTreeButton.clicked += () => JSONManager.CreateNewTreeFile(textTreeField);
     }
 
     private void SaveTextTreeButtonEvent()

@@ -6,6 +6,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private VisualElement backgroundElement;
     private VisualElement contentLayerElement;
+    private VisualElement nodeLayerElement;
     private VisualElement edgeLayerElement;
     private VisualElement cursorElement;
     private Button addNodeButton;
@@ -14,6 +15,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     private Vector2 panStartContentPos;
     private NodeElement currentSelectNode;
     private EdgeElement currentEdge;
+    // private Vector2 nodeDragOffset;
 
 
     [MenuItem("Window/TextTree Editor")]
@@ -36,11 +38,13 @@ public partial class TextTreeEditorWindow : EditorWindow
         // Do not change the order of these
         SetClickBackground();
         SetContentArea();
+        SetNodeArea();
         SetEdgeArea();
         SetCursor();
 
         CursorEvent();
         PanningEvent();
+        NodeMovingEvent();
 
         // TextTreeEditorWindow_Node.cs
         AddNodeEvent();
@@ -78,6 +82,16 @@ public partial class TextTreeEditorWindow : EditorWindow
         contentLayerElement = new VisualElement();
         contentLayerElement.AddToClassList("contentLayer");
         backgroundElement.Add(contentLayerElement);
+    }
+
+    private void SetNodeArea()
+    {
+        nodeLayerElement = new VisualElement
+        {
+            pickingMode = PickingMode.Ignore, // Ignore mouse event
+            style = { position = Position.Absolute, left = 0, top = 0, right = 0, bottom = 0 }
+        };
+        contentLayerElement.Add(nodeLayerElement);
     }
 
     private void SetEdgeArea()
@@ -153,6 +167,33 @@ public partial class TextTreeEditorWindow : EditorWindow
             {
                 isPanning = false;
                 backgroundElement.ReleaseMouse(); // stop event capturing for this window
+            }
+        });
+    }
+    #endregion
+
+    #region Node Moving Event
+    private void NodeMovingEvent()
+    {
+        backgroundElement.RegisterCallback<MouseMoveEvent>(evt =>
+        {
+            if (currentSelectNode != null && isNodeMoving)
+            {
+                Vector2 mousePosition = backgroundElement.LocalToWorld(evt.localMousePosition);
+                Vector2 newPosition = mousePosition - new Vector2(currentSelectNode.resolvedStyle.width * 0.5f, currentSelectNode.resolvedStyle.height * 0.5f);
+
+                currentSelectNode.style.left = newPosition.x;
+                currentSelectNode.style.top = newPosition.y;
+
+                currentSelectNode.textNodeData.position = newPosition; // Update position in text node data
+            }
+        });
+
+        backgroundElement.RegisterCallback<MouseUpEvent>(evt =>
+        {
+            if (evt.button == 0 && isNodeMoving)
+            {
+                isNodeMoving = false;
             }
         });
     }
