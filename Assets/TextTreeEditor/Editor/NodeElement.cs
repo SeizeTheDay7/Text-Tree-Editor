@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 internal sealed class NodeElement : VisualElement
 {
     public TextNodeData textNodeData;
+    public List<EdgeElement> inEdge = new List<EdgeElement>();
+    public List<EdgeElement> outEdge = new List<EdgeElement>();
 
     // Constructor for new node at cursor position
     public NodeElement(VisualElement contentLayer, VisualElement cursor)

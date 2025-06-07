@@ -173,6 +173,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     #endregion
 
     #region Node Moving Event
+    // ※ It breaks when it becomes a node element event
     private void NodeMovingEvent()
     {
         backgroundElement.RegisterCallback<MouseMoveEvent>(evt =>
@@ -186,6 +187,9 @@ public partial class TextTreeEditorWindow : EditorWindow
                 currentSelectNode.style.top = newPosition.y;
 
                 currentSelectNode.textNodeData.position = newPosition; // Update position in text node data
+
+                foreach (EdgeElement edge in currentSelectNode.inEdge) edge.UpdateLine();
+                foreach (EdgeElement edge in currentSelectNode.outEdge) edge.UpdateLine();
             }
         });
 

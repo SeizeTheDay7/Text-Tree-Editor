@@ -29,6 +29,8 @@ internal sealed class EdgeElement : VisualElement
         this.background = background;
         name = "edge";
         generateVisualContent += OnGenerate;
+
+        AddEdgeRef();
     }
 
     // Line geometry update for a new edge
@@ -49,7 +51,22 @@ internal sealed class EdgeElement : VisualElement
             nextKey = toNode.textNodeData.key,
             condArr = new List<Condition>()
         });
+        AddEdgeRef();
+
         MarkDirtyRepaint();
+    }
+
+    private void AddEdgeRef()
+    {
+        fromNode.outEdge.Add(this);
+        toNode.inEdge.Add(this);
+    }
+
+    // TODO :: Call this function when delete this edge
+    private void RemoveEdgeRef()
+    {
+        fromNode.outEdge.Remove(this);
+        toNode.inEdge.Remove(this);
     }
 
     private void OnGenerate(MeshGenerationContext ctx)
