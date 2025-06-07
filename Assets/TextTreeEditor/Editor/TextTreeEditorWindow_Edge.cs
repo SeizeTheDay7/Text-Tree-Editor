@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
-    private void MakeNewEdge(VisualElement fromNode)
+    private void MakeNewEdge(NodeElement fromNode)
     {
         currentEdge = new EdgeElement(fromNode, contentLayerElement, backgroundElement);
         BeginEdgeMoving();
@@ -18,7 +18,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         currentEdge = null;
     }
 
-    private void ConfirmEdge(VisualElement toNode)
+    private void ConfirmEdge(NodeElement toNode)
     {
         currentEdge.ConfirmEdge(toNode);
         currentEdge = null;

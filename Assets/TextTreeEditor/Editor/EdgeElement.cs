@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 internal sealed class EdgeElement : VisualElement
 {
-    public VisualElement fromNode;
     private VisualElement background;
     private VisualElement contentLayer;
-    private VisualElement toNode;
+    public NodeElement fromNode;
+    private NodeElement toNode;
     private Vector2 mousePosition;
 
-    public EdgeElement(VisualElement from, VisualElement contentLayer, VisualElement background)
+    public EdgeElement(NodeElement from, VisualElement contentLayer, VisualElement background)
     {
         fromNode = from;
         this.contentLayer = contentLayer;
@@ -23,9 +24,14 @@ internal sealed class EdgeElement : VisualElement
         mousePosition = contentLayer.WorldToLocal(background.LocalToWorld(mouseLocalInBg));
         MarkDirtyRepaint();
     }
-    public void ConfirmEdge(VisualElement to)
+    public void ConfirmEdge(NodeElement to)
     {
         toNode = to;
+        fromNode.textNodeData.nextNodes.Add(new TextEdge
+        {
+            nextKey = toNode.textNodeData.key,
+            condArr = new List<Condition>()
+        });
         MarkDirtyRepaint();
     }
 

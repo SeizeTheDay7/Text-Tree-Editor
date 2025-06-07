@@ -1,13 +1,32 @@
 {
     "items": [
         {
-            "key": "854d3efb-1a34-4157-a500-e86b3ae1d056",
-            "text": "asdfasf",
+            "key": "29287e1d-f65e-4881-8467-073b5693047c",
+            "text": "asdf",
             "position": {
                 "x": 0.0,
                 "y": 0.0
             },
-            "nextNodes": []
+            "nextNodes": [
+                {
+                    "nextKey": "77581b85-7ae3-4e13-b5e6-8d2d241c273e",
+                    "condArr": []
+                }
+            ]
+        },
+        {
+            "key": "77581b85-7ae3-4e13-b5e6-8d2d241c273e",
+            "text": "zzz",
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "nextNodes": [
+                {
+                    "nextKey": "29287e1d-f65e-4881-8467-073b5693047c",
+                    "condArr": []
+                }
+            ]
         }
     ]
 }
