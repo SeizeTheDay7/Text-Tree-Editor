@@ -1,1 +1,13 @@
-{"items":[{"key":"c55e70a0-9807-4d0d-8f5e-a18fce547da4","text":"asdf","position":{"x":0.0,"y":0.0},"nextNodes":[]}]}
+{
+    "items": [
+        {
+            "key": "fdcda500-ac4c-4fc8-80e5-c9433f214ca9",
+            "text": "asdfasdf",
+            "position": {
+                "x": 0.0,
+                "y": 0.0
+            },
+            "nextNodes": []
+        }
+    ]
+}

@@ -7,7 +7,7 @@ using System;
 public partial class TextTreeEditorWindow : EditorWindow
 {
     /// <summary>
-    /// Add node at the cursor point (or init point if there's no cursor)
+    /// Add node at the cursor point (or init point if there's no visible cursor)
     /// </summary>
     private void AddNodeEvent()
     {
@@ -27,11 +27,11 @@ public partial class TextTreeEditorWindow : EditorWindow
     }
 
     /// <summary>
-    /// Add new node to text tree dictionary
+    /// Add new node to text tree list
     /// </summary>
     private void AddNewNodeToTextTree(NodeElement node)
     {
-        if (node == null || textTreeDataList == null) { Debug.LogError("Node or textNodeDict is null"); return; }
+        if (node == null || textTreeDataDict == null) { Debug.LogError("Node or textNodeList is null"); return; }
 
         var textNodeData = new TextNodeData
         {
@@ -41,9 +41,9 @@ public partial class TextTreeEditorWindow : EditorWindow
             nextNodes = new List<TextEdge>()
         };
 
-        // shallow copy. node and dict has the same reference to textNodeData.
+        // shallow copy. node and list has the same reference to textNodeData.
         node.textNodeData = textNodeData;
-        textTreeDataList.Add(textNodeData);
+        textTreeDataDict[textNodeData.key] = textNodeData;
     }
 
     /// <summary>

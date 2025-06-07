@@ -8,7 +8,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private ObjectField textTreeField;
     private TextField nodeTextField;
-    private List<TextNodeData> textTreeDataList; // Used for saving
+    private Dictionary<string, TextNodeData> textTreeDataDict; // Used for saving
 
     private void SetUI()
     {
@@ -48,7 +48,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         textTreeField.RegisterValueChangedCallback(evt =>
         {
             if (evt.newValue == null) { Debug.LogError("Text tree load failed"); return; }
-            textTreeDataList = new List<TextNodeData>();
+            textTreeDataDict = new Dictionary<string, TextNodeData>();
             // LoadTextTreeData(evt.newValue as TextAsset);
 
             currentSelectNode = null;
@@ -87,8 +87,8 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void SaveTextTree()
     {
-        if (textTreeDataList == null) { Debug.LogError("textNodeDict is null"); return; }
-        JSONManager.SaveTreeToJson(textTreeDataList, textTreeField);
+        if (textTreeDataDict == null) { Debug.LogError("textNodeDict is null"); return; }
+        JSONManager.SaveTreeToJson(textTreeDataDict, textTreeField);
     }
 
 }

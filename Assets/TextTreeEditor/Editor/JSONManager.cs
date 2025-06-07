@@ -28,7 +28,7 @@ internal static class JSONManager
         textTreeField.value = AssetDatabase.LoadAssetAtPath<TextAsset>(path.Replace(Application.dataPath, "Assets"));
     }
 
-    public static void SaveTreeToJson(List<TextNodeData> textTreeList, ObjectField textTreeField)
+    public static void SaveTreeToJson(Dictionary<string, TextNodeData> textTreeDict, ObjectField textTreeField)
     {
         if (textTreeField.value == null)
         {
@@ -36,7 +36,7 @@ internal static class JSONManager
             return;
         }
 
-        string json = JsonUtility.ToJson(new SerializedList<TextNodeData>(textTreeList));
+        string json = JsonUtility.ToJson(new Serialization<TextNodeData>(textTreeDict.Values), true);
         string path = AssetDatabase.GetAssetPath(textTreeField.value);
 
         File.WriteAllText(path, json);

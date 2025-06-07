@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 
 [Serializable]
-public class SerializedList<T>
+public class Serialization<T>
 {
     public List<T> items;
 
-    public SerializedList(List<T> items)
+    public Serialization(IEnumerable<T> items)
     {
-        this.items = items;
+        this.items = new List<T>(items);
     }
 }
 
