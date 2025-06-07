@@ -8,7 +8,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private ObjectField textTreeField;
     private TextField nodeTextField;
-    private Dictionary<string, TextNodeData> textTreeDataDict; // Used for saving
+    private Dictionary<string, NodeElement> nodeElementDict;
 
     private void SetUI()
     {
@@ -47,50 +47,46 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         textTreeField.RegisterValueChangedCallback(evt =>
         {
+            // 1. Reset the layers unconditionally
             contentLayerElement.style.translate = new StyleTranslate(new Translate(0, 0, 0));
             nodeLayerElement.Clear();
             edgeLayerElement.Clear();
             if (evt.newValue == null) { return; }
 
-            textTreeDataDict = JSONManager.LoadJsonToDict(evt.newValue as TextAsset);
-            if (textTreeDataDict == null) { Debug.LogError("Failed to load text tree data"); return; }
-            InitContentLayer();
+            // 2. Load data from JSON file
+            var textNodeDataList = JSONManager.LoadJsonToList(evt.newValue as TextAsset);
+            if (textNodeDataList == null) { Debug.LogError("Failed to load text tree data"); return; }
 
+            // 3. Ready new scene and fill up the dictionary
+            nodeElementDict = new Dictionary<string, NodeElement>();
+            LoadNode(textNodeDataList);
+            LoadEdge();
+
+            // 4. Reset state values
             currentSelectNode = null;
             currentEdge = null;
             nodeTextField.value = "";
         });
     }
-
-    private void InitContentLayer()
+    private void LoadNode(List<TextNodeData> textNodeDataList)
     {
-        if (textTreeDataDict == null) return;
-        LoadNode(); // Calls LoadEdge() at the end
-    }
-
-    private void LoadNode()
-    {
-        var tempNodeElementDict = new Dictionary<string, NodeElement>();
-        foreach (var kvp in textTreeDataDict) // kvp : key value pair
+        foreach (var textNodeData in textNodeDataList)
         {
-            var nodeElement = new NodeElement(kvp.Value.position, kvp.Value);
+            var nodeElement = new NodeElement(textNodeData.position, textNodeData);
             SetNodeEvent(nodeElement);
             nodeLayerElement.Add(nodeElement);
-            tempNodeElementDict[kvp.Key] = nodeElement;
+            nodeElementDict[textNodeData.key] = nodeElement;
         }
-
-        LoadEdge(tempNodeElementDict);
     }
 
-    private void LoadEdge(Dictionary<string, NodeElement> tempNodeElementDict)
+    private void LoadEdge()
     {
-        foreach (var kvp in textTreeDataDict)
+        foreach (var kvp in nodeElementDict) // kvp : key value pair
         {
-            var textNodeData = kvp.Value;
-            var fromNode = tempNodeElementDict[textNodeData.key];
-            foreach (var edge in textNodeData.nextNodes)
+            var fromNode = kvp.Value;
+            foreach (var edge in fromNode.textNodeData.nextNodes)
             {
-                var toNode = tempNodeElementDict[edge.nextKey];
+                var toNode = nodeElementDict[edge.nextKey];
                 var edgeElement = new EdgeElement(fromNode, toNode, edgeLayerElement, backgroundElement);
                 edgeLayerElement.Add(edgeElement);
             }
@@ -127,8 +123,8 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void SaveTextTree()
     {
-        if (textTreeDataDict == null) { Debug.LogError("textNodeDict is null"); return; }
-        JSONManager.SaveTreeToJson(textTreeDataDict, textTreeField);
+        if (nodeElementDict == null) { Debug.LogError("nodeElementDict is null"); return; }
+        JSONManager.SaveTreeToJson(nodeElementDict, textTreeField);
     }
 
 }

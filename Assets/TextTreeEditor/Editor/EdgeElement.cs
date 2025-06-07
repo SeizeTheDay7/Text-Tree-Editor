@@ -31,11 +31,16 @@ internal sealed class EdgeElement : VisualElement
         generateVisualContent += OnGenerate;
     }
 
+    // Line geometry update for a new edge
     public void UpdateLine(Vector2 mouseLocalInBg)
     {
         mousePosition = edgeLayer.WorldToLocal(background.LocalToWorld(mouseLocalInBg));
         MarkDirtyRepaint();
     }
+
+    // Line geometry update while moving the node
+    public void UpdateLine() => MarkDirtyRepaint();
+
     public void ConfirmEdge(NodeElement to)
     {
         toNode = to;

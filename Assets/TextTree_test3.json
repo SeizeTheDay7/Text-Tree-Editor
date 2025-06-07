@@ -1,0 +1,45 @@
+{
+    "items": [
+        {
+            "key": "aab20143-67c9-4b4c-8865-c033c7682b5f",
+            "text": "",
+            "position": {
+                "x": 264.0,
+                "y": 119.33332824707031
+            },
+            "nextNodes": [
+                {
+                    "nextKey": "9aed6a5e-dd54-4050-8e22-beeaaac8c652",
+                    "condArr": []
+                },
+                {
+                    "nextKey": "4743c31f-eefa-4ad3-8386-32f3d97cdffd",
+                    "condArr": []
+                }
+            ]
+        },
+        {
+            "key": "9aed6a5e-dd54-4050-8e22-beeaaac8c652",
+            "text": "",
+            "position": {
+                "x": 504.0,
+                "y": 366.6666564941406
+            },
+            "nextNodes": []
+        },
+        {
+            "key": "4743c31f-eefa-4ad3-8386-32f3d97cdffd",
+            "text": "",
+            "position": {
+                "x": 713.0,
+                "y": 185.33334350585938
+            },
+            "nextNodes": [
+                {
+                    "nextKey": "9aed6a5e-dd54-4050-8e22-beeaaac8c652",
+                    "condArr": []
+                }
+            ]
+        }
+    ]
+}

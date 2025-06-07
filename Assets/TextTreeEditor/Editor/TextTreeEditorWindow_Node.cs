@@ -33,7 +33,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     /// </summary>
     private void AddNewNodeToTextTree(NodeElement node)
     {
-        if (node == null || textTreeDataDict == null) { Debug.LogError("Node or textNodeList is null"); return; }
+        if (node == null || nodeElementDict == null) { Debug.LogError("Node or nodeElementDict is null"); return; }
 
         var textNodeData = new TextNodeData
         {
@@ -46,9 +46,8 @@ public partial class TextTreeEditorWindow : EditorWindow
             nextNodes = new List<TextEdge>()
         };
 
-        // shallow copy. node and list has the same reference to textNodeData.
         node.textNodeData = textNodeData;
-        textTreeDataDict[textNodeData.key] = textNodeData;
+        nodeElementDict[textNodeData.key] = node;
     }
 
     /// <summary>
