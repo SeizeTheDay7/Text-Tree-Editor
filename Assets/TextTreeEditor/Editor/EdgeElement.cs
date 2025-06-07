@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-internal sealed class ConnectionElement : VisualElement
+internal sealed class EdgeElement : VisualElement
 {
     public VisualElement fromNode;
     private VisualElement background;
@@ -9,12 +9,12 @@ internal sealed class ConnectionElement : VisualElement
     private VisualElement toNode;
     private Vector2 mousePosition;
 
-    public ConnectionElement(VisualElement from, VisualElement contentLayer, VisualElement background)
+    public EdgeElement(VisualElement from, VisualElement contentLayer, VisualElement background)
     {
         fromNode = from;
         this.contentLayer = contentLayer;
         this.background = background;
-        name = "connection";
+        name = "edge";
         generateVisualContent += OnGenerate;
     }
 
@@ -23,7 +23,7 @@ internal sealed class ConnectionElement : VisualElement
         mousePosition = contentLayer.WorldToLocal(background.LocalToWorld(mouseLocalInBg));
         MarkDirtyRepaint();
     }
-    public void ConfirmConnection(VisualElement to)
+    public void ConfirmEdge(VisualElement to)
     {
         toNode = to;
         MarkDirtyRepaint();

@@ -52,7 +52,7 @@ public partial class TextTreeEditorWindow : EditorWindow
             // LoadTextTreeData(evt.newValue as TextAsset);
 
             currentSelectNode = null;
-            currentConnection = null;
+            currentEdge = null;
             nodeTextField.value = "";
         });
     }

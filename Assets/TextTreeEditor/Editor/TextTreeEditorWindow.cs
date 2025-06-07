@@ -6,14 +6,14 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private VisualElement backgroundElement;
     private VisualElement contentLayerElement;
-    private VisualElement connectionLayerElement;
+    private VisualElement edgeLayerElement;
     private VisualElement cursorElement;
     private Button addNodeButton;
     private bool isPanning = false;
     private Vector2 panStartMouse;
     private Vector2 panStartContentPos;
     private NodeElement currentSelectNode;
-    private ConnectionElement currentConnection;
+    private EdgeElement currentEdge;
 
 
     [MenuItem("Window/TextTree Editor")]
@@ -36,7 +36,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         // Do not change the order of these
         SetClickBackground();
         SetContentArea();
-        SetConnectionArea();
+        SetEdgeArea();
         SetCursor();
 
         CursorEvent();
@@ -53,7 +53,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         // debugButton.clicked += () => JSONManager.CreateNewField();
     }
 
-    #region VisualElement
+    #region Base Component
     private void SetClickBackground()
     {
         backgroundElement = rootVisualElement.Q<VisualElement>("Background");
@@ -80,19 +80,19 @@ public partial class TextTreeEditorWindow : EditorWindow
         backgroundElement.Add(contentLayerElement);
     }
 
-    private void SetConnectionArea()
+    private void SetEdgeArea()
     {
-        connectionLayerElement = new VisualElement
+        edgeLayerElement = new VisualElement
         {
             pickingMode = PickingMode.Ignore, // Ignore mouse event
             style = { position = Position.Absolute, left = 0, top = 0, right = 0, bottom = 0 }
         };
-        contentLayerElement.Add(connectionLayerElement);
+        contentLayerElement.Add(edgeLayerElement);
     }
 
     #endregion
 
-    #region Event
+    #region Cursor & Panning Event
 
     /// <summary>
     /// Left click to set cursor
@@ -104,7 +104,7 @@ public partial class TextTreeEditorWindow : EditorWindow
             if (evt.button == 0) // left click
             {
                 DeselectCurrentNode();
-                DeleteTempConnection();
+                DeleteTempEdge();
 
                 Vector2 world = backgroundElement.LocalToWorld(evt.localMousePosition);
                 Vector2 rootPos = rootVisualElement.WorldToLocal(world);
@@ -155,36 +155,6 @@ public partial class TextTreeEditorWindow : EditorWindow
                 backgroundElement.ReleaseMouse(); // stop event capturing for this window
             }
         });
-    }
-
-    private void MakeNewConnection(VisualElement fromNode)
-    {
-        currentConnection = new ConnectionElement(fromNode, contentLayerElement, backgroundElement);
-        BeginConnectionMoving();
-        connectionLayerElement.Add(currentConnection);
-    }
-
-    private void DeleteTempConnection()
-    {
-        if (currentConnection == null) return;
-        StopConnectionMouseMoving();
-        currentConnection.RemoveFromHierarchy();
-        currentConnection = null;
-    }
-
-    private void ConfirmConnection(VisualElement toNode)
-    {
-        currentConnection.ConfirmConnection(toNode);
-        currentConnection = null;
-        StopConnectionMouseMoving();
-    }
-
-    public void BeginConnectionMoving() => backgroundElement.RegisterCallback<MouseMoveEvent>(UpdateLine);
-    public void StopConnectionMouseMoving() => backgroundElement.UnregisterCallback<MouseMoveEvent>(UpdateLine);
-    private void UpdateLine(MouseMoveEvent evt)
-    {
-        if (currentConnection == null) return;
-        currentConnection.UpdateLine(evt.localMousePosition);
     }
 
     #endregion

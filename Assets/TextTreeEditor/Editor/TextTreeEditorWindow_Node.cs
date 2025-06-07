@@ -48,16 +48,16 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     /// <summary>
     /// 1. Left click to select node
-    /// 2. Right click to create new connection
+    /// 2. Right click to create new edge
     /// 3. Left click to connect two nodes
     /// </summary>
     private void SetNodeEvent(NodeElement node)
     {
         node.RegisterCallback<MouseDownEvent>(evt =>
         {
-            if (evt.button == 0 && currentConnection != null && currentConnection.fromNode != node)
+            if (evt.button == 0 && currentEdge != null && currentEdge.fromNode != node)
             {
-                ConfirmConnection(node);
+                ConfirmEdge(node);
             }
             if (evt.button == 0)
             {
@@ -69,9 +69,9 @@ public partial class TextTreeEditorWindow : EditorWindow
 
         var manipulator = new ContextualMenuManipulator(evt =>
         {
-            evt.menu.AppendAction("Create Connection", a =>
+            evt.menu.AppendAction("Create Edge", a =>
             {
-                MakeNewConnection(node);
+                MakeNewEdge(node);
             });
         });
 
@@ -82,12 +82,13 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         currentSelectNode = node;
         currentSelectNode.AddToClassList("highlighted");
-        // nodeTextField.value = ;
+        nodeTextField.value = currentSelectNode.textNodeData.text;
     }
 
     private void DeselectCurrentNode()
     {
         if (currentSelectNode != null) { currentSelectNode.RemoveFromClassList("highlighted"); }
         currentSelectNode = null;
+        nodeTextField.value = "";
     }
 }
