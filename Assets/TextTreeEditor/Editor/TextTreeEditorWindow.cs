@@ -120,8 +120,7 @@ public partial class TextTreeEditorWindow : EditorWindow
                 DeselectCurrentNode();
                 DeleteTempEdge();
 
-                Vector2 world = backgroundElement.LocalToWorld(evt.localMousePosition);
-                Vector2 rootPos = rootVisualElement.WorldToLocal(world);
+                Vector2 rootPos = backgroundElement.ChangeCoordinatesTo(rootVisualElement, evt.localMousePosition);
 
                 float adjustedX = rootPos.x - (cursorElement.resolvedStyle.width * 0.5f);
                 float adjustedY = rootPos.y - (cursorElement.resolvedStyle.height * 0.5f);
@@ -180,8 +179,9 @@ public partial class TextTreeEditorWindow : EditorWindow
         {
             if (currentSelectNode != null && isNodeMoving)
             {
-                Vector2 mousePosition = backgroundElement.LocalToWorld(evt.localMousePosition);
-                Vector2 newPosition = mousePosition - new Vector2(currentSelectNode.resolvedStyle.width * 0.5f, currentSelectNode.resolvedStyle.height * 0.5f);
+                Vector2 contentLocalPos = backgroundElement.ChangeCoordinatesTo(contentLayerElement, evt.localMousePosition);
+                Vector2 halfSize = new Vector2(currentSelectNode.resolvedStyle.width * 0.5f, currentSelectNode.resolvedStyle.height * 0.5f);
+                Vector2 newPosition = contentLocalPos - halfSize;
 
                 currentSelectNode.style.left = newPosition.x;
                 currentSelectNode.style.top = newPosition.y;

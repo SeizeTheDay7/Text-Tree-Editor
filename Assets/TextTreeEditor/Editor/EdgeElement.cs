@@ -36,7 +36,7 @@ internal sealed class EdgeElement : VisualElement
     // Line geometry update for a new edge
     public void UpdateLine(Vector2 mouseLocalInBg)
     {
-        mousePosition = edgeLayer.WorldToLocal(background.LocalToWorld(mouseLocalInBg));
+        mousePosition = background.ChangeCoordinatesTo(edgeLayer, mouseLocalInBg);
         MarkDirtyRepaint();
     }
 
