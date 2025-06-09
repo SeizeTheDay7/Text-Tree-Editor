@@ -5,7 +5,7 @@
         <VisualElement name="UIPanel" style="border-left-width: 1px; border-top-width: 0; border-left-color: rgb(111, 111, 111); border-right-color: rgb(111, 111, 111); border-top-color: rgb(111, 111, 111); border-bottom-color: rgb(111, 111, 111); border-right-width: 0; border-bottom-width: 0;">
             <Button text="Add Node" name="addNodeButton" enabled="true" />
             <VisualElement class="flex" style="flex-grow: 0;">
-                <uie:ObjectField name="TextTreeField" label="Text Tree" type="UnityEngine.TextAsset" style="width: auto;" />
+                <uie:ObjectField name="TextTreeField" label="Text Tree" style="width: auto;" />
                 <Button text="new" name="NewTextTreeButton" style="width: auto;" />
                 <Button text="save" name="SaveTextTreeButton" style="width: auto;" />
             </VisualElement>

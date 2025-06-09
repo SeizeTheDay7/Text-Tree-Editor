@@ -59,7 +59,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         node.RegisterCallback<MouseDownEvent>(evt =>
         {
-            if (evt.button == 0 && currentEdge != null && currentEdge.fromNode != node)
+            if (evt.button == 0 && currentCreatingEdge != null && currentCreatingEdge.fromNode != node)
             {
                 ConfirmEdge(node);
             }
@@ -69,8 +69,8 @@ public partial class TextTreeEditorWindow : EditorWindow
 
                 DeselectCurrentNode();
                 SelectNode(node);
-                evt.StopPropagation();
             }
+            evt.StopPropagation();
         });
 
         var manipulator = new ContextualMenuManipulator(evt =>

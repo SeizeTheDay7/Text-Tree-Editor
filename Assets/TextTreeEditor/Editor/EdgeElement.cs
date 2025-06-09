@@ -1,59 +1,90 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using UnityEditor.Overlays;
 
 internal sealed class EdgeElement : VisualElement
 {
+
     private VisualElement background;
     private VisualElement edgeLayer;
     public NodeElement fromNode;
     private NodeElement toNode;
     private Vector2 mousePosition;
+    private bool _highlight;
+    public bool Highlight
+    {
+        get => _highlight;
+        set
+        {
+            if (_highlight == value) return;
+            _highlight = value;
+            style.backgroundColor = value ? Color.yellow : Color.white;
+            MarkDirtyRepaint();
+        }
+    }
+    const float BodyThickness = 2f;
+    const float HeadSize = 10f;
+
+    private void Init()
+    {
+        name = "edge";
+
+        style.position = Position.Absolute;
+        style.height = BodyThickness;
+        style.backgroundColor = Color.white;
+        style.transformOrigin = new TransformOrigin(0, .5f, 0); // left center
+    }
 
     // Constructor for new edge
     public EdgeElement(NodeElement from, VisualElement edgeLayer, VisualElement background)
     {
+        Init();
         fromNode = from;
         this.edgeLayer = edgeLayer;
         this.background = background;
-        name = "edge";
+        pickingMode = PickingMode.Ignore;
+
         generateVisualContent += OnGenerate;
     }
 
     // Constructor for loaded edge
     public EdgeElement(NodeElement from, NodeElement to, VisualElement edgeLayer, VisualElement background)
     {
+        Init();
         fromNode = from;
         toNode = to;
         this.edgeLayer = edgeLayer;
         this.background = background;
-        name = "edge";
         generateVisualContent += OnGenerate;
+        pickingMode = PickingMode.Position;
 
         AddEdgeRef();
+        LayoutBody();
+        RegisterCallbackOnce<GeometryChangedEvent>(_ => LayoutBody());
     }
 
     // Line geometry update for a new edge
     public void UpdateLine(Vector2 mouseLocalInBg)
     {
         mousePosition = background.ChangeCoordinatesTo(edgeLayer, mouseLocalInBg);
-        MarkDirtyRepaint();
+        LayoutBody();
     }
 
     // Line geometry update while moving the node
-    public void UpdateLine() => MarkDirtyRepaint();
+    public void UpdateLine() => LayoutBody();
 
     public void ConfirmEdge(NodeElement to)
     {
+        pickingMode = PickingMode.Position;
         toNode = to;
         fromNode.textNodeData.nextNodes.Add(new TextEdge
         {
             nextKey = toNode.textNodeData.key,
-            condArr = new List<Condition>()
+            condList = new List<Condition>()
         });
         AddEdgeRef();
-
-        MarkDirtyRepaint();
+        LayoutBody();
     }
 
     private void AddEdgeRef()
@@ -69,37 +100,42 @@ internal sealed class EdgeElement : VisualElement
         toNode.inEdge.Remove(this);
     }
 
-    private void OnGenerate(MeshGenerationContext ctx)
+    private void LayoutBody()
     {
-        var p = ctx.painter2D;
-        p.lineWidth = 2;
-        p.strokeColor = Color.white;
-        p.fillColor = Color.white;
-
         // coordinate
         Vector2 start = edgeLayer.WorldToLocal(new Vector2(fromNode.worldBound.center.x, fromNode.worldBound.yMax));
         Vector2 end = (toNode == null)
             ? mousePosition
             : edgeLayer.WorldToLocal(new Vector2(toNode.worldBound.center.x, toNode.worldBound.yMin));
 
-        // line
+        Vector2 dir = end - start;
+        float len = dir.magnitude;
+        float angleDeg = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        style.left = start.x;
+        style.top = start.y;
+        style.width = len;
+        style.rotate = new Rotate(new Angle(angleDeg));
+
+        MarkDirtyRepaint();
+    }
+
+    private void OnGenerate(MeshGenerationContext ctx)
+    {
+        var p = ctx.painter2D;
+        float h = resolvedStyle.height;     // BodyThickness
+
+        // ArrowHead
+        Vector2 tip = new(resolvedStyle.width, h * .5f);
+        Vector2 dir = Vector2.right;
+        Vector2 n = new(0, 1);
+
+        Vector2 b = tip - dir * HeadSize + n * HeadSize * .5f;
+        Vector2 c = tip - dir * HeadSize - n * HeadSize * .5f;
+
+        p.fillColor = Highlight ? Color.yellow : Color.white;
         p.BeginPath();
-        p.MoveTo(start);
-        p.LineTo(end);
-        p.Stroke();
-        // Vector2 h = new(Mathf.Abs(end.x - start.x) * .5f, 0);
-        // p.BezierCurveTo(start + h, end - h, end);
-
-        // arrowhead
-        const float head = 10f; // Increased from 6f to 10f
-        Vector2 dir = (end - start).normalized;
-        Vector2 n = new(-dir.y, dir.x);
-
-        Vector2 b = end - dir * head + n * head * .5f;
-        Vector2 c = end - dir * head - n * head * .5f;
-
-        p.BeginPath();
-        p.MoveTo(end); p.LineTo(b); p.LineTo(c);
+        p.MoveTo(tip); p.LineTo(b); p.LineTo(c);
         p.ClosePath(); p.Fill();
     }
 }

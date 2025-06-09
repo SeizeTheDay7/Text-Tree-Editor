@@ -14,8 +14,8 @@ public partial class TextTreeEditorWindow : EditorWindow
     private Vector2 panStartMouse;
     private Vector2 panStartContentPos;
     private NodeElement currentSelectNode;
-    private EdgeElement currentEdge;
-    // private Vector2 nodeDragOffset;
+    private EdgeElement currentCreatingEdge;
+    private EdgeElement currentSelectEdge;
 
 
     [MenuItem("Window/TextTree Editor")]
@@ -45,6 +45,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         CursorEvent();
         PanningEvent();
         NodeMovingEvent();
+        BackgroundInitEvent();
 
         // TextTreeEditorWindow_Node.cs
         AddNodeEvent();
@@ -106,6 +107,23 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     #endregion
 
+    #region Background Init Event
+
+    private void BackgroundInitEvent()
+    {
+        backgroundElement.RegisterCallback<MouseDownEvent>(evt =>
+        {
+            if (evt.button == 0)
+            {
+                DeselectCurrentNode();
+                DeselectCurrentEdge();
+                DeleteTempEdge();
+            }
+        });
+    }
+
+    #endregion
+
     #region Cursor & Panning Event
 
     /// <summary>
@@ -115,11 +133,8 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         backgroundElement.RegisterCallback<MouseDownEvent>(evt =>
         {
-            if (evt.button == 0) // left click
+            if (evt.button == 0 && currentCreatingEdge == null) // left click
             {
-                DeselectCurrentNode();
-                DeleteTempEdge();
-
                 Vector2 rootPos = backgroundElement.ChangeCoordinatesTo(rootVisualElement, evt.localMousePosition);
 
                 float adjustedX = rootPos.x - (cursorElement.resolvedStyle.width * 0.5f);

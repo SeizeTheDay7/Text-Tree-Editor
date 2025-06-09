@@ -27,7 +27,7 @@ public class TextNodeData
 public class TextEdge
 {
     public string nextKey;
-    public List<Condition> condArr;
+    public List<Condition> condList;
 }
 
 [Serializable]

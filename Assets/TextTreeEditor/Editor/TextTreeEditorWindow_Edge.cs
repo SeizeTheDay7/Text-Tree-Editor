@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 
@@ -5,23 +6,32 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private void MakeNewEdge(NodeElement fromNode)
     {
-        currentEdge = new EdgeElement(fromNode, edgeLayerElement, backgroundElement);
+        cursorElement.style.visibility = Visibility.Hidden;
+        currentCreatingEdge = new EdgeElement(fromNode, edgeLayerElement, backgroundElement);
         BeginEdgeMoving();
-        edgeLayerElement.Add(currentEdge);
+        edgeLayerElement.Add(currentCreatingEdge);
     }
 
     private void DeleteTempEdge()
     {
-        if (currentEdge == null) return;
+        if (currentCreatingEdge == null) return;
         StopEdgeMouseMoving();
-        currentEdge.RemoveFromHierarchy();
-        currentEdge = null;
+        currentCreatingEdge.RemoveFromHierarchy();
+        currentCreatingEdge = null;
+    }
+
+    private void DeselectCurrentEdge()
+    {
+        if (currentSelectEdge == null) return;
+        currentSelectEdge.Highlight = false;
+        currentSelectEdge = null;
     }
 
     private void ConfirmEdge(NodeElement toNode)
     {
-        currentEdge.ConfirmEdge(toNode);
-        currentEdge = null;
+        currentCreatingEdge.ConfirmEdge(toNode);
+        EdgeEvent(currentCreatingEdge);
+        currentCreatingEdge = null;
         StopEdgeMouseMoving();
     }
 
@@ -29,7 +39,34 @@ public partial class TextTreeEditorWindow : EditorWindow
     public void StopEdgeMouseMoving() => backgroundElement.UnregisterCallback<MouseMoveEvent>(UpdateLine);
     private void UpdateLine(MouseMoveEvent evt)
     {
-        if (currentEdge == null) return;
-        currentEdge.UpdateLine(evt.localMousePosition);
+        if (currentCreatingEdge == null) return;
+        currentCreatingEdge.UpdateLine(evt.localMousePosition);
+    }
+
+    private void EdgeEvent(EdgeElement edge)
+    {
+        edge.RegisterCallback<MouseDownEvent>(evt =>
+            {
+                if (evt.button == 0) // left click
+                {
+                    SelectEdge(edge);
+                    evt.StopPropagation();
+                }
+            }
+        );
+    }
+
+    private void SelectEdge(EdgeElement edge)
+    {
+        edge.Highlight = true;
+        InitEdgeField(edge);
+
+        if (currentSelectEdge != null) currentSelectEdge.Highlight = false;
+        currentSelectEdge = edge;
+    }
+
+    private void InitEdgeField(EdgeElement edge)
+    {
+
     }
 }

@@ -64,7 +64,8 @@ public partial class TextTreeEditorWindow : EditorWindow
 
             // 4. Reset state values
             currentSelectNode = null;
-            currentEdge = null;
+            currentCreatingEdge = null;
+            currentSelectEdge = null;
             nodeTextField.value = "";
         });
     }
@@ -88,6 +89,7 @@ public partial class TextTreeEditorWindow : EditorWindow
             {
                 var toNode = nodeElementDict[edge.nextKey];
                 var edgeElement = new EdgeElement(fromNode, toNode, edgeLayerElement, backgroundElement);
+                EdgeEvent(edgeElement);
                 edgeLayerElement.Add(edgeElement);
             }
         }
