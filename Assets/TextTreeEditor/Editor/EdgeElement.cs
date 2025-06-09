@@ -22,9 +22,10 @@ internal sealed class EdgeElement : VisualElement
             MarkDirtyRepaint();
         }
     }
-    const float BodyThickness = 2f;
+    const float renderThickness = 2f;
+    const float clickThickness = 10f;
     const float HeadSize = 10f;
-    private VisualElement clickArea;
+    public VisualElement clickArea;
 
     #region Constructor
     private void Init(VisualElement edgeLayer, VisualElement background)
@@ -32,12 +33,26 @@ internal sealed class EdgeElement : VisualElement
         name = "edge";
         this.edgeLayer = edgeLayer;
         this.background = background;
+        AddClickArea();
 
         style.position = Position.Absolute;
-        style.height = BodyThickness;
+        style.height = renderThickness;
         style.backgroundColor = Color.white;
         style.transformOrigin = new TransformOrigin(0, .5f, 0); // left center
         pickingMode = PickingMode.Ignore; // to only gets event from clickArea
+    }
+
+    private void AddClickArea()
+    {
+        clickArea = new VisualElement();
+        clickArea.style.position = Position.Absolute;
+        clickArea.style.left = 0;
+        clickArea.style.top = 0;
+        clickArea.style.width = new Length(100, LengthUnit.Percent);
+        clickArea.style.height = clickThickness;
+        clickArea.style.translate = new Translate(0, -clickThickness * 0.5f);
+        clickArea.style.backgroundColor = Color.clear;
+        this.Add(clickArea);
     }
 
     // Constructor for new edge. Not getting click until confirm edge.
@@ -56,9 +71,8 @@ internal sealed class EdgeElement : VisualElement
         fromNode = from;
         toNode = to;
 
-        generateVisualContent += OnGenerate;
-
         AddEdgeRef();
+        generateVisualContent += OnGenerate;
         RegisterCallbackOnce<GeometryChangedEvent>(_ => LayoutBody());
     }
 

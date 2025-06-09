@@ -45,9 +45,10 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void EdgeEvent(EdgeElement edge)
     {
-        edge.RegisterCallback<MouseDownEvent>(evt =>
+        VisualElement edgeClickArea = edge.clickArea;
+        edgeClickArea.RegisterCallback<MouseDownEvent>(evt =>
             {
-                if (evt.button == 0) // left click
+                if (evt.button == 0 && currentCreatingEdge == null) // left click
                 {
                     SelectEdge(edge);
                     evt.StopPropagation();
