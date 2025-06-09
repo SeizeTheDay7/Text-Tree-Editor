@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
-using UnityEditor.Overlays;
 
 internal sealed class EdgeElement : VisualElement
 {
@@ -25,25 +24,27 @@ internal sealed class EdgeElement : VisualElement
     }
     const float BodyThickness = 2f;
     const float HeadSize = 10f;
+    private VisualElement clickArea;
 
-    private void Init()
+    #region Constructor
+    private void Init(VisualElement edgeLayer, VisualElement background)
     {
         name = "edge";
+        this.edgeLayer = edgeLayer;
+        this.background = background;
 
         style.position = Position.Absolute;
         style.height = BodyThickness;
         style.backgroundColor = Color.white;
         style.transformOrigin = new TransformOrigin(0, .5f, 0); // left center
+        pickingMode = PickingMode.Ignore; // to only gets event from clickArea
     }
 
-    // Constructor for new edge
+    // Constructor for new edge. Not getting click until confirm edge.
     public EdgeElement(NodeElement from, VisualElement edgeLayer, VisualElement background)
     {
-        Init();
+        Init(edgeLayer, background);
         fromNode = from;
-        this.edgeLayer = edgeLayer;
-        this.background = background;
-        pickingMode = PickingMode.Ignore;
 
         generateVisualContent += OnGenerate;
     }
@@ -51,38 +52,28 @@ internal sealed class EdgeElement : VisualElement
     // Constructor for loaded edge
     public EdgeElement(NodeElement from, NodeElement to, VisualElement edgeLayer, VisualElement background)
     {
-        Init();
+        Init(edgeLayer, background);
         fromNode = from;
         toNode = to;
-        this.edgeLayer = edgeLayer;
-        this.background = background;
+
         generateVisualContent += OnGenerate;
-        pickingMode = PickingMode.Position;
 
         AddEdgeRef();
-        LayoutBody();
         RegisterCallbackOnce<GeometryChangedEvent>(_ => LayoutBody());
     }
 
-    // Line geometry update for a new edge
-    public void UpdateLine(Vector2 mouseLocalInBg)
-    {
-        mousePosition = background.ChangeCoordinatesTo(edgeLayer, mouseLocalInBg);
-        LayoutBody();
-    }
+    #endregion
 
-    // Line geometry update while moving the node
-    public void UpdateLine() => LayoutBody();
-
+    #region Confirm edge
     public void ConfirmEdge(NodeElement to)
     {
-        pickingMode = PickingMode.Position;
         toNode = to;
         fromNode.textNodeData.nextNodes.Add(new TextEdge
         {
             nextKey = toNode.textNodeData.key,
             condList = new List<Condition>()
         });
+
         AddEdgeRef();
         LayoutBody();
     }
@@ -99,10 +90,22 @@ internal sealed class EdgeElement : VisualElement
         fromNode.outEdge.Remove(this);
         toNode.inEdge.Remove(this);
     }
+    #endregion
+
+    #region Update rendering
+
+    // Line geometry update for a new edge
+    public void UpdateLine(Vector2 mouseLocalInBg)
+    {
+        mousePosition = background.ChangeCoordinatesTo(edgeLayer, mouseLocalInBg);
+        LayoutBody();
+    }
+
+    // Line geometry update while moving the node
+    public void UpdateLine() => LayoutBody();
 
     private void LayoutBody()
     {
-        // coordinate
         Vector2 start = edgeLayer.WorldToLocal(new Vector2(fromNode.worldBound.center.x, fromNode.worldBound.yMax));
         Vector2 end = (toNode == null)
             ? mousePosition
@@ -120,12 +123,12 @@ internal sealed class EdgeElement : VisualElement
         MarkDirtyRepaint();
     }
 
+    // For drawing arrowhead
     private void OnGenerate(MeshGenerationContext ctx)
     {
         var p = ctx.painter2D;
         float h = resolvedStyle.height;     // BodyThickness
 
-        // ArrowHead
         Vector2 tip = new(resolvedStyle.width, h * .5f);
         Vector2 dir = Vector2.right;
         Vector2 n = new(0, 1);
@@ -138,4 +141,5 @@ internal sealed class EdgeElement : VisualElement
         p.MoveTo(tip); p.LineTo(b); p.LineTo(c);
         p.ClosePath(); p.Fill();
     }
+    #endregion
 }
