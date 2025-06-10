@@ -51,11 +51,16 @@ public partial class TextTreeEditorWindow : EditorWindow
         AddNodeEvent();
     }
 
-    private void ResetPick()
+    private enum ExceptFor { Nothing, Cursor, Node, Edge }
+
+    private void ResetPick(ExceptFor exceptFor)
     {
-        cursorElement.visible = false;
-        DeselectCurrentNode();
-        DeselectCurrentEdge();
+        if (exceptFor != ExceptFor.Cursor)
+            cursorElement.visible = false;
+        if (exceptFor != ExceptFor.Node)
+            DeselectCurrentNode();
+        if (exceptFor != ExceptFor.Edge)
+            DeselectCurrentEdge();
     }
 
     private void DebugButtonEvent()
@@ -142,6 +147,8 @@ public partial class TextTreeEditorWindow : EditorWindow
         {
             if (evt.button == 0 && currentCreatingEdge == null) // left click
             {
+                ResetPick(ExceptFor.Nothing);
+
                 Vector2 rootPos = backgroundElement.ChangeCoordinatesTo(rootVisualElement, evt.localMousePosition);
 
                 float adjustedX = rootPos.x - (cursorElement.resolvedStyle.width * 0.5f);
@@ -161,7 +168,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         backgroundElement.RegisterCallback<MouseDownEvent>(evt =>
         {
-            if (evt.button == 2) // right click
+            if (evt.button == 2) // wheel button
             {
                 isPanning = true;
                 panStartMouse = evt.mousePosition;

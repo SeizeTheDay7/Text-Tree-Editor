@@ -67,16 +67,18 @@ public partial class TextTreeEditorWindow : EditorWindow
             {
                 isNodeMoving = true;
 
-                DeselectCurrentNode();
+                ResetPick(ExceptFor.Nothing);
                 SelectNode(node);
             }
             evt.StopPropagation();
         });
 
+        // Right click to open menu
         var manipulator = new ContextualMenuManipulator(evt =>
         {
             evt.menu.AppendAction("Create Edge", a =>
             {
+                ResetPick(ExceptFor.Nothing);
                 MakeNewEdge(node);
             });
         });

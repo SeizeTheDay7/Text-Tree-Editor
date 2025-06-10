@@ -58,6 +58,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void SelectEdge(EdgeElement edge)
     {
+        ResetPick(ExceptFor.Edge);
         edge.Highlight = true;
         InitEdgeField(edge);
 
