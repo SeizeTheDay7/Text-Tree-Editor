@@ -10,7 +10,7 @@
                 <Button text="save" name="SaveTextTreeButton" style="width: auto;" />
             </VisualElement>
             <TextField label="Node Text" placeholder-text="filler text" name="NodeText" />
-            <Button text="Button" name="Debug" />
+            <uie:PropertyField name="ConditionField" />
         </VisualElement>
     </VisualElement>
 </UXML>

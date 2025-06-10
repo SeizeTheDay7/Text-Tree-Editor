@@ -1,41 +1,54 @@
 {
     "items": [
         {
-            "key": "2b7474f3-0035-4661-ad9d-dbe835358bd3",
+            "key": "21916c5e-4378-4143-96ae-14fe1dd819c2",
             "text": "",
             "position": {
-                "x": 322.6666564941406,
-                "y": 159.3333282470703
+                "x": 383.3333435058594,
+                "y": 269.3333435058594
             },
-            "nextNodes": [
+            "edgeList": [
                 {
-                    "nextKey": "3a4b0cae-f749-4f7c-a37e-f213c489a32d",
+                    "nextKey": "5a07b9a0-3d06-473b-9be6-3ccde29bff19",
                     "condList": []
                 }
             ]
         },
         {
-            "key": "3a4b0cae-f749-4f7c-a37e-f213c489a32d",
+            "key": "5a07b9a0-3d06-473b-9be6-3ccde29bff19",
             "text": "",
             "position": {
-                "x": 616.6666870117188,
-                "y": 363.3333435058594
+                "x": 194.6666717529297,
+                "y": 498.0
             },
-            "nextNodes": [
+            "edgeList": []
+        },
+        {
+            "key": "db86864f-abb3-4ee4-a40d-7e70feee2b1a",
+            "text": "",
+            "position": {
+                "x": 660.3333740234375,
+                "y": 889.3333740234375
+            },
+            "edgeList": []
+        },
+        {
+            "key": "87b0a8d2-8c16-4ce5-9ea0-f916843906bc",
+            "text": "",
+            "position": {
+                "x": 403.0,
+                "y": 714.6666870117188
+            },
+            "edgeList": [
                 {
-                    "nextKey": "2ff295f1-069d-47d6-b156-5a0f71e870b7",
+                    "nextKey": "5a07b9a0-3d06-473b-9be6-3ccde29bff19",
+                    "condList": []
+                },
+                {
+                    "nextKey": "db86864f-abb3-4ee4-a40d-7e70feee2b1a",
                     "condList": []
                 }
             ]
-        },
-        {
-            "key": "2ff295f1-069d-47d6-b156-5a0f71e870b7",
-            "text": "",
-            "position": {
-                "x": 455.666748046875,
-                "y": 596.0
-            },
-            "nextNodes": []
         }
     ]
 }

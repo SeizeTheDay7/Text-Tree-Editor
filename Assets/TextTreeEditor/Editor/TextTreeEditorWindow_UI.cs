@@ -8,12 +8,14 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private ObjectField textTreeField;
     private TextField nodeTextField;
+    private PropertyField conditionField;
     private Dictionary<string, NodeElement> nodeElementDict;
 
     private void SetUI()
     {
         SetTextTreeField();
         SetTextField();
+        SetConditionField();
 
         TextTreeFieldEvent();
         NodeTextFieldEvent();
@@ -21,6 +23,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         SaveTextTreeButtonEvent();
     }
 
+    #region Allocate element
     private void SetTextTreeField()
     {
         textTreeField = rootVisualElement.Q<ObjectField>("TextTreeField");
@@ -40,6 +43,14 @@ public partial class TextTreeEditorWindow : EditorWindow
         input.style.whiteSpace = WhiteSpace.Pre;
     }
 
+    private void SetConditionField()
+    {
+        conditionField = rootVisualElement.Q<PropertyField>("ConditionField");
+        if (conditionField == null) Debug.LogError("ConditionField not found");
+    }
+    #endregion
+
+    #region Tree field event
     /// <summary>
     /// Occurs when new text tree allocated
     /// </summary>
@@ -69,6 +80,9 @@ public partial class TextTreeEditorWindow : EditorWindow
             nodeTextField.value = "";
         });
     }
+    #endregion
+
+    #region Load node & edge
     private void LoadNode(List<TextNodeData> textNodeDataList)
     {
         foreach (var textNodeData in textNodeDataList)
@@ -85,15 +99,18 @@ public partial class TextTreeEditorWindow : EditorWindow
         foreach (var kvp in nodeElementDict) // kvp : key value pair
         {
             var fromNode = kvp.Value;
-            foreach (var edge in fromNode.textNodeData.nextNodes)
+            foreach (var edge in fromNode.textNodeData.edgeList)
             {
                 var toNode = nodeElementDict[edge.nextKey];
-                var edgeElement = new EdgeElement(fromNode, toNode, edgeLayerElement, backgroundElement);
+                var conditionList = edge.condList;
+                var edgeElement = new EdgeElement(fromNode, toNode, conditionList, edgeLayerElement, backgroundElement);
                 EdgeEvent(edgeElement);
-                edgeLayerElement.Add(edgeElement);
             }
         }
     }
+    #endregion
+
+    #region Field event
 
     /// <summary>
     /// Occurs when text has edited
@@ -128,5 +145,6 @@ public partial class TextTreeEditorWindow : EditorWindow
         if (nodeElementDict == null) { Debug.LogError("nodeElementDict is null"); return; }
         JSONManager.SaveTreeToJson(nodeElementDict, textTreeField);
     }
+    #endregion
 
 }

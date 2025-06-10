@@ -9,6 +9,7 @@ internal sealed class EdgeElement : VisualElement
     private VisualElement edgeLayer;
     public NodeElement fromNode;
     private NodeElement toNode;
+    public List<Condition> conditionList;
     private Vector2 mousePosition;
     private bool _highlight;
     public bool Highlight
@@ -33,6 +34,7 @@ internal sealed class EdgeElement : VisualElement
         name = "edge";
         this.edgeLayer = edgeLayer;
         this.background = background;
+        edgeLayer.Add(this);
         AddClickArea();
 
         style.position = Position.Absolute;
@@ -59,17 +61,19 @@ internal sealed class EdgeElement : VisualElement
     public EdgeElement(NodeElement from, VisualElement edgeLayer, VisualElement background)
     {
         Init(edgeLayer, background);
+        clickArea.pickingMode = PickingMode.Ignore;
         fromNode = from;
 
         generateVisualContent += OnGenerate;
     }
 
     // Constructor for loaded edge
-    public EdgeElement(NodeElement from, NodeElement to, VisualElement edgeLayer, VisualElement background)
+    public EdgeElement(NodeElement from, NodeElement to, List<Condition> conditionList, VisualElement edgeLayer, VisualElement background)
     {
         Init(edgeLayer, background);
         fromNode = from;
         toNode = to;
+        this.conditionList = conditionList;
 
         AddEdgeRef();
         generateVisualContent += OnGenerate;
@@ -81,8 +85,10 @@ internal sealed class EdgeElement : VisualElement
     #region Confirm edge
     public void ConfirmEdge(NodeElement to)
     {
+        clickArea.pickingMode = PickingMode.Position;
+
         toNode = to;
-        fromNode.textNodeData.nextNodes.Add(new TextEdge
+        fromNode.textNodeData.edgeList.Add(new TextEdge
         {
             nextKey = toNode.textNodeData.key,
             condList = new List<Condition>()

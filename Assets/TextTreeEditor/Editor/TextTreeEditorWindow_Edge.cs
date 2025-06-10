@@ -9,7 +9,6 @@ public partial class TextTreeEditorWindow : EditorWindow
         cursorElement.style.visibility = Visibility.Hidden;
         currentCreatingEdge = new EdgeElement(fromNode, edgeLayerElement, backgroundElement);
         BeginEdgeMoving();
-        edgeLayerElement.Add(currentCreatingEdge);
     }
 
     private void DeleteTempEdge()
@@ -68,6 +67,9 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void InitEdgeField(EdgeElement edge)
     {
+        TempCondSO tempSO = CreateInstance<TempCondSO>();
+        tempSO.conditionList = edge.conditionList;
+        SerializedObject so = new SerializedObject(tempSO);
 
     }
 }

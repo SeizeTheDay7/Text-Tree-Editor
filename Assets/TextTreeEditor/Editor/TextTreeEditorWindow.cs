@@ -30,7 +30,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/TextTreeEditor/Editor/TextTreeEditorWindow.uxml");
         visualTree.CloneTree(rootVisualElement);
 
-        DebugButtonEvent();
+        // DebugButtonEvent();
 
         // TextTreeEditorWindow_UI.cs
         SetUI();
@@ -49,6 +49,13 @@ public partial class TextTreeEditorWindow : EditorWindow
 
         // TextTreeEditorWindow_Node.cs
         AddNodeEvent();
+    }
+
+    private void ResetPick()
+    {
+        cursorElement.visible = false;
+        DeselectCurrentNode();
+        DeselectCurrentEdge();
     }
 
     private void DebugButtonEvent()

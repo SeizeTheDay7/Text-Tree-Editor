@@ -43,7 +43,7 @@ public partial class TextTreeEditorWindow : EditorWindow
                 node.style.left.value.value,
                 node.style.top.value.value
             ),
-            nextNodes = new List<TextEdge>()
+            edgeList = new List<TextEdge>()
         };
 
         node.textNodeData = textNodeData;

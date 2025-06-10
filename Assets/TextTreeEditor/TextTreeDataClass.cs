@@ -20,7 +20,7 @@ public class TextNodeData
     public string key;
     public string text;
     public Vector2 position;
-    public List<TextEdge> nextNodes;
+    public List<TextEdge> edgeList;
 }
 
 [Serializable]
