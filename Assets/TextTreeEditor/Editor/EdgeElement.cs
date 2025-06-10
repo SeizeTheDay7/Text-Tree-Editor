@@ -24,7 +24,7 @@ internal sealed class EdgeElement : VisualElement
         }
     }
     const float renderThickness = 2f;
-    const float clickThickness = 10f;
+    const float clickThickness = 13f;
     const float HeadSize = 10f;
     public VisualElement clickArea;
 

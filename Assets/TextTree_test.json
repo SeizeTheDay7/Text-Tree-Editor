@@ -18,7 +18,13 @@
                 },
                 {
                     "nextKey": "db86864f-abb3-4ee4-a40d-7e70feee2b1a",
-                    "condList": []
+                    "condList": [
+                        {
+                            "field": "test",
+                            "compFunc": 3,
+                            "value": 1.0
+                        }
+                    ]
                 }
             ]
         },

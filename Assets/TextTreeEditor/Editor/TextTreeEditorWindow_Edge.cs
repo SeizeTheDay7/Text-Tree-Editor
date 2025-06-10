@@ -1,9 +1,14 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
+using UnityEditor.UIElements;
+using System.Collections.Generic;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
+    TempCondSO tempSO;
+    SerializedObject so;
+
     private void MakeNewEdge(NodeElement fromNode)
     {
         cursorElement.style.visibility = Visibility.Hidden;
@@ -17,13 +22,6 @@ public partial class TextTreeEditorWindow : EditorWindow
         StopEdgeMouseMoving();
         currentCreatingEdge.RemoveFromHierarchy();
         currentCreatingEdge = null;
-    }
-
-    private void DeselectCurrentEdge()
-    {
-        if (currentSelectEdge == null) return;
-        currentSelectEdge.Highlight = false;
-        currentSelectEdge = null;
     }
 
     private void ConfirmEdge(NodeElement toNode)
@@ -66,11 +64,32 @@ public partial class TextTreeEditorWindow : EditorWindow
         currentSelectEdge = edge;
     }
 
+    private void DeselectCurrentEdge()
+    {
+        if (currentSelectEdge == null) return;
+        currentSelectEdge.Highlight = false;
+        currentSelectEdge = null;
+        ResetCurrentEdgeField();
+    }
+
     private void InitEdgeField(EdgeElement edge)
     {
-        TempCondSO tempSO = CreateInstance<TempCondSO>();
+        if (tempSO != null) DestroyImmediate(tempSO);
+        tempSO = CreateInstance<TempCondSO>();
         tempSO.conditionList = edge.conditionList;
-        SerializedObject so = new SerializedObject(tempSO);
 
+        so = new SerializedObject(tempSO);
+        SerializedProperty propertyToBind = so.FindProperty("conditionList");
+
+        conditionField.BindProperty(propertyToBind);
+    }
+
+    private void ResetCurrentEdgeField()
+    {
+        if (tempSO != null) DestroyImmediate(tempSO);
+        tempSO = null;
+        so = null;
+        conditionField.Unbind();
+        conditionField.Clear();
     }
 }
