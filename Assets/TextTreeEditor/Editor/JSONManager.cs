@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-
+/// <summary>
+/// JSON Manager for Editor
+/// </summary>
 internal static class JSONManager
 {
     public static void CreateNewTreeFile(ObjectField textTreeField)

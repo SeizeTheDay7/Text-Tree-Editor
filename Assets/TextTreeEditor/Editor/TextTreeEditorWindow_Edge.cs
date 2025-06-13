@@ -1,12 +1,10 @@
-using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-using System.Collections.Generic;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
-    TempCondSO tempSO;
+    TempCondSO tempCondSO;
     SerializedObject so;
 
     private void MakeNewEdge(NodeElement fromNode)
@@ -74,11 +72,11 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void InitEdgeField(EdgeElement edge)
     {
-        if (tempSO != null) DestroyImmediate(tempSO);
-        tempSO = CreateInstance<TempCondSO>();
-        tempSO.conditionList = edge.conditionList;
+        if (tempCondSO != null) DestroyImmediate(tempCondSO);
+        tempCondSO = CreateInstance<TempCondSO>();
+        tempCondSO.conditionList = edge.conditionList;
 
-        so = new SerializedObject(tempSO);
+        so = new SerializedObject(tempCondSO);
         SerializedProperty propertyToBind = so.FindProperty("conditionList");
 
         conditionField.BindProperty(propertyToBind);
@@ -86,8 +84,8 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void ResetCurrentEdgeField()
     {
-        if (tempSO != null) DestroyImmediate(tempSO);
-        tempSO = null;
+        if (tempCondSO != null) DestroyImmediate(tempCondSO);
+        tempCondSO = null;
         so = null;
         conditionField.Unbind();
         conditionField.Clear();

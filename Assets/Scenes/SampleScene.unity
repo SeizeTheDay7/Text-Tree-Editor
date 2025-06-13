@@ -197,19 +197,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textNode:
+    key: 
     text: 
     position: {x: 0, y: 0}
-    nextNodes:
-    - condArr:
-      - field: 
-        compFunc: 0
-        value: 0
-      - field: 
-        compFunc: 0
-        value: 0
-      - field: 
-        compFunc: 0
-        value: 0
+    edgeList: []
   testEnum: 2
   testEnum2: 3
 --- !u!4 &502528392

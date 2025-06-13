@@ -20,9 +20,9 @@
                     "nextKey": "db86864f-abb3-4ee4-a40d-7e70feee2b1a",
                     "condList": [
                         {
-                            "field": "test",
+                            "field": "testField",
                             "compFunc": 3,
-                            "value": 1.0
+                            "value": "1"
                         }
                     ]
                 }

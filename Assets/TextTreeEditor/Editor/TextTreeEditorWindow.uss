@@ -46,3 +46,7 @@
 #NodeText {
     height: 300px;
 }
+
+#WarningSign {
+    color: red;
+}
