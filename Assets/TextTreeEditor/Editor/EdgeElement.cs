@@ -10,7 +10,7 @@ internal sealed class EdgeElement : VisualElement
     private VisualElement edgeLayer;
     public NodeElement fromNode;
     private NodeElement toNode;
-    public List<Condition> conditionList; // reference of condList in TextEdge in fromNode
+    public TextEdge textEdge; // reference of TextEdge in fromNode
     private Vector2 mousePosition;
     private bool _highlight;
     public bool Highlight
@@ -69,12 +69,12 @@ internal sealed class EdgeElement : VisualElement
     }
 
     // Constructor for loaded edge
-    public EdgeElement(NodeElement from, NodeElement to, List<Condition> conditionList, VisualElement edgeLayer, VisualElement background)
+    public EdgeElement(NodeElement from, NodeElement to, TextEdge textEdge, VisualElement edgeLayer, VisualElement background)
     {
         Init(edgeLayer, background);
         fromNode = from;
         toNode = to;
-        this.conditionList = conditionList;
+        this.textEdge = textEdge;
 
         AddEdgeRef();
         generateVisualContent += OnGenerate;
@@ -96,7 +96,7 @@ internal sealed class EdgeElement : VisualElement
             edgeEvent = new List<UnityEvent>()
         };
         fromNode.textNodeData.edgeList.Add(newTextEdge);
-        conditionList = newTextEdge.condList;
+        textEdge = newTextEdge;
 
         AddEdgeRef();
         LayoutBody();

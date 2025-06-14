@@ -102,8 +102,7 @@ public partial class TextTreeEditorWindow : EditorWindow
             foreach (var edge in fromNode.textNodeData.edgeList)
             {
                 var toNode = nodeElementDict[edge.nextKey];
-                var conditionList = edge.condList;
-                var edgeElement = new EdgeElement(fromNode, toNode, conditionList, edgeLayerElement, backgroundElement);
+                var edgeElement = new EdgeElement(fromNode, toNode, edge, edgeLayerElement, backgroundElement);
                 EdgeEvent(edgeElement);
             }
         }

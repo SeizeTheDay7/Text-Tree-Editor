@@ -77,7 +77,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         if (tempCondSO != null) DestroyImmediate(tempCondSO);
         tempCondSO = CreateInstance<TempCondSO>();
-        tempCondSO.conditionList = edge.conditionList;
+        tempCondSO.conditionList = edge.textEdge.condList;
 
         so = new SerializedObject(tempCondSO);
         SerializedProperty propertyToBind = so.FindProperty("conditionList");
