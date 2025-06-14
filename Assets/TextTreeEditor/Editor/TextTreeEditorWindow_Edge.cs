@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
@@ -70,6 +71,8 @@ public partial class TextTreeEditorWindow : EditorWindow
         ResetCurrentEdgeField();
     }
 
+    #region Edge Field
+
     private void InitEdgeField(EdgeElement edge)
     {
         if (tempCondSO != null) DestroyImmediate(tempCondSO);
@@ -90,4 +93,6 @@ public partial class TextTreeEditorWindow : EditorWindow
         conditionField.Unbind();
         conditionField.Clear();
     }
+
+    #endregion
 }

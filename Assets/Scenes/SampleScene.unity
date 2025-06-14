@@ -200,6 +200,7 @@ MonoBehaviour:
     key: 
     text: 
     position: {x: 0, y: 0}
+    nodeEvent: []
     edgeList: []
   testEnum: 2
   testEnum2: 3

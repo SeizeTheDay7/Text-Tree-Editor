@@ -28,7 +28,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         textTreeField = rootVisualElement.Q<ObjectField>("TextTreeField");
         if (textTreeField == null) Debug.LogError("TextTreeField not found");
-        textTreeField.objectType = typeof(TextAsset);
+        textTreeField.objectType = typeof(TextTreeSO);
     }
 
     private void SetTextField()
@@ -64,20 +64,18 @@ public partial class TextTreeEditorWindow : EditorWindow
             edgeLayerElement.Clear();
             if (evt.newValue == null) { return; }
 
-            // 2. Load data from JSON file
-            var textNodeDataList = JSONManager.LoadJsonToList(evt.newValue as TextAsset);
-            if (textNodeDataList == null) { Debug.LogError("Failed to load text tree data"); return; }
-
-            // 3. Ready new scene and fill up the dictionary
+            // 2. Draw nodes and edges from text tree
+            TextTreeSO textTreeSO = textTreeField.value as TextTreeSO;
             nodeElementDict = new Dictionary<string, NodeElement>();
-            LoadNode(textNodeDataList);
+            LoadNode(textTreeSO.textNodeList);
             LoadEdge();
 
-            // 4. Reset state values
+            // 3. Reset state values
             currentSelectNode = null;
             currentCreatingEdge = null;
             currentSelectEdge = null;
             nodeTextField.value = "";
+            ResetCurrentEdgeField();
         });
     }
     #endregion
@@ -85,6 +83,8 @@ public partial class TextTreeEditorWindow : EditorWindow
     #region Load node & edge
     private void LoadNode(List<TextNodeData> textNodeDataList)
     {
+        if (textNodeDataList == null) return;
+
         foreach (var textNodeData in textNodeDataList)
         {
             var nodeElement = new NodeElement(textNodeData.position, textNodeData);
@@ -129,7 +129,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         var newTextTreeButton = rootVisualElement.Q<Button>("NewTextTreeButton");
         if (newTextTreeButton == null) Debug.LogError("NewTextTreeButton not found");
 
-        newTextTreeButton.clicked += () => JSONManager.CreateNewTreeFile(textTreeField);
+        newTextTreeButton.clicked += () => TextTreeSOUtil.CreateNewTreeFile(textTreeField);
     }
 
     private void SaveTextTreeButtonEvent()
@@ -143,7 +143,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     private void SaveTextTree()
     {
         if (nodeElementDict == null) { Debug.LogError("nodeElementDict is null"); return; }
-        JSONManager.SaveTreeToJson(nodeElementDict, textTreeField);
+        TextTreeSOUtil.SaveTreeToSO(nodeElementDict, textTreeField);
     }
     #endregion
 

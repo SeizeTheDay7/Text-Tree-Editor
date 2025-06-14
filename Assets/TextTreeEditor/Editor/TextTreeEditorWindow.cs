@@ -30,8 +30,6 @@ public partial class TextTreeEditorWindow : EditorWindow
         var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/TextTreeEditor/Editor/TextTreeEditorWindow.uxml");
         visualTree.CloneTree(rootVisualElement);
 
-        // DebugButtonEvent();
-
         // TextTreeEditorWindow_UI.cs
         SetUI();
 
@@ -61,13 +59,6 @@ public partial class TextTreeEditorWindow : EditorWindow
             DeselectCurrentNode();
         if (exceptFor != ExceptFor.Edge)
             DeselectCurrentEdge();
-    }
-
-    private void DebugButtonEvent()
-    {
-        var debugButton = rootVisualElement.Q<Button>("Debug");
-        if (debugButton == null) { Debug.Log("Button 'debugButton' not found!"); return; }
-        // debugButton.clicked += () => JSONManager.CreateNewField();
     }
 
     #region Base Component

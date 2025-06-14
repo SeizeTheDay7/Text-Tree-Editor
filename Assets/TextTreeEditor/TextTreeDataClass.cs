@@ -4,8 +4,6 @@ using UnityEditor;
 using System;
 using System.Collections.Generic;
 
-
-
 [Serializable]
 public class Serialization<T>
 {
@@ -15,15 +13,6 @@ public class Serialization<T>
     {
         this.items = new List<T>(items);
     }
-}
-
-[Serializable]
-public class TextTreeMetaData
-{
-    // public Vector2 lastTranslate;
-    // public float lastZoom;
-    public SceneAsset scene; // To expose in inspector
-    public string sceneAssetPath; // To use in runtime
 }
 
 [Serializable]

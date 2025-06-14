@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 
@@ -9,7 +10,7 @@ internal sealed class EdgeElement : VisualElement
     private VisualElement edgeLayer;
     public NodeElement fromNode;
     private NodeElement toNode;
-    public List<Condition> conditionList;
+    public List<Condition> conditionList; // reference of condList in TextEdge in fromNode
     private Vector2 mousePosition;
     private bool _highlight;
     public bool Highlight
@@ -88,11 +89,14 @@ internal sealed class EdgeElement : VisualElement
         clickArea.pickingMode = PickingMode.Position;
 
         toNode = to;
-        fromNode.textNodeData.edgeList.Add(new TextEdge
+        TextEdge newTextEdge = new TextEdge
         {
             nextKey = toNode.textNodeData.key,
-            condList = new List<Condition>()
-        });
+            condList = new List<Condition>(),
+            edgeEvent = new List<UnityEvent>()
+        };
+        fromNode.textNodeData.edgeList.Add(newTextEdge);
+        conditionList = newTextEdge.condList;
 
         AddEdgeRef();
         LayoutBody();

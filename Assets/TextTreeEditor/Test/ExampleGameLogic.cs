@@ -14,7 +14,7 @@ public class ExampleGameLogic : MonoBehaviour
 
     public void ProceedToNextNode()
     {
-        currentTextNode = textNodeDict[TextTreeToolbox.GetNextNodeKey(currentTextNode)];
+        currentTextNode = textNodeDict[TextTreeUtil.GetNextNodeKey(currentTextNode)];
     }
 
 }

@@ -10,6 +10,6 @@ public class TempCondSO : ScriptableObject
     public TempCondSO(List<Condition> conditionList)
     {
         this.conditionList = conditionList;
-        fieldNameList = GameContextToolbox.GetGameContextFieldNameList();
+        fieldNameList = GameContextUtil.GetGameContextFieldNameList();
     }
 }

@@ -13,7 +13,7 @@ public class ConditionDrawer : PropertyDrawer
         // Make a dropdown for field property
         SerializedProperty fieldProperty = property.FindPropertyRelative("field");
         var dropdown = new DropdownField("Field");
-        dropdown.choices = GameContextToolbox.GetGameContextFieldNameList();
+        dropdown.choices = GameContextUtil.GetGameContextFieldNameList();
         dropdown.BindProperty(fieldProperty);
 
         // Make a box showing field type
@@ -24,7 +24,7 @@ public class ConditionDrawer : PropertyDrawer
         {
             string fieldName = evt.newValue;
             if (string.IsNullOrEmpty(fieldName)) { fieldTypeField.value = ""; }
-            fieldTypeField.value = GameContextToolbox.GetGameContextFieldTypeAlias(fieldName);
+            fieldTypeField.value = GameContextUtil.GetGameContextFieldTypeAlias(fieldName);
         });
 
         // Make a field for compFunc and value
@@ -39,7 +39,7 @@ public class ConditionDrawer : PropertyDrawer
         valueField.RegisterCallback<SerializedPropertyChangeEvent>(evt =>
         {
             string newValue = valueProperty.boxedValue.ToString();
-            if (GameContextToolbox.CanCastValueToFieldType(fieldProperty.stringValue, newValue))
+            if (GameContextUtil.CanCastValueToFieldType(fieldProperty.stringValue, newValue))
             {
                 warningSign.style.display = DisplayStyle.None;
             }
@@ -55,6 +55,8 @@ public class ConditionDrawer : PropertyDrawer
         container.Add(compFuncField);
         container.Add(valueField);
         container.Add(warningSign);
+
+        // if anything changed in container, save it
 
         return container;
     }
