@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
@@ -6,7 +5,9 @@ using UnityEditor.UIElements;
 public partial class TextTreeEditorWindow : EditorWindow
 {
     TempCondSO tempCondSO;
-    SerializedObject so;
+    TempEventSO tempEventSO;
+    SerializedObject condSO;
+    SerializedObject eventSO;
 
     private void MakeNewEdge(NodeElement fromNode)
     {
@@ -75,23 +76,38 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void InitEdgeField(EdgeElement edge)
     {
+        // Init condition field
         if (tempCondSO != null) DestroyImmediate(tempCondSO);
         tempCondSO = CreateInstance<TempCondSO>();
         tempCondSO.conditionList = edge.textEdge.condList;
 
-        so = new SerializedObject(tempCondSO);
-        SerializedProperty propertyToBind = so.FindProperty("conditionList");
+        condSO = new SerializedObject(tempCondSO);
+        SerializedProperty propertyToBind = condSO.FindProperty("conditionList");
+        conditionDrawer.BindProperty(propertyToBind);
 
-        conditionField.BindProperty(propertyToBind);
+        // Init event field
+        if (tempEventSO != null) DestroyImmediate(tempEventSO);
+        tempEventSO = CreateInstance<TempEventSO>();
+        tempEventSO.eventList = edge.textEdge.edgeEventList;
+
+        eventSO = new SerializedObject(tempEventSO);
+        SerializedProperty eventPropertyToBind = eventSO.FindProperty("eventList");
+        eventDrawer.BindProperty(eventPropertyToBind);
     }
 
     private void ResetCurrentEdgeField()
     {
         if (tempCondSO != null) DestroyImmediate(tempCondSO);
         tempCondSO = null;
-        so = null;
-        conditionField.Unbind();
-        conditionField.Clear();
+        condSO = null;
+        conditionDrawer.Unbind();
+        conditionDrawer.Clear();
+
+        if (tempEventSO != null) DestroyImmediate(tempEventSO);
+        tempEventSO = null;
+        eventSO = null;
+        eventDrawer.Unbind();
+        eventDrawer.Clear();
     }
 
     #endregion

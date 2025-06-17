@@ -13,24 +13,40 @@ MonoBehaviour:
   m_Name: TextTree_Name
   m_EditorClassIdentifier: 
   textNodeList:
-  - key: fe4b9fee-2eb9-4cd9-94ad-76a5d2b7c1fe
-    text: a
-    position: {x: 448.66666, y: 262}
-    nodeEvent: []
+  - key: 858351b1-feb0-46ad-aaac-46344921d1da
+    text: DFCHDFHDFH
+    position: {x: 447, y: 105}
+    nodeEventList: []
     edgeList:
-    - nextKey: ad9be623-2b2e-4a6b-afa8-9fea276bb801
-      edgeEvent: []
+    - nextKey: 96ba884a-6efe-4c11-b445-1747518508ba
+      edgeEventList:
+      - target:
+          exposedName: 
+          defaultValue: {fileID: 0}
+        methodName: testFunc
+        args:
+        - '[Scene] GameObject'
+        - '[Scene] GameObject'
+        - Footsteps_DirtyGround_Jump_Land_01
+      - target:
+          exposedName: 
+          defaultValue: {fileID: 0}
+        methodName: 
+        args: []
       condList:
       - field: testField
         compFunc: 0
         value: 1
-  - key: ad9be623-2b2e-4a6b-afa8-9fea276bb801
-    text: b
-    position: {x: 248.33334, y: 518}
-    nodeEvent: []
-    edgeList: []
-  - key: 48665dff-b89b-4150-b5fe-192460a4ff88
+    - nextKey: e70a6864-2a47-4bd3-868b-a564b0fb2a8e
+      edgeEventList: []
+      condList: []
+  - key: 96ba884a-6efe-4c11-b445-1747518508ba
     text: 
-    position: {x: 632.6667, y: 540.6667}
-    nodeEvent: []
+    position: {x: 279, y: 319}
+    nodeEventList: []
+    edgeList: []
+  - key: e70a6864-2a47-4bd3-868b-a564b0fb2a8e
+    text: 
+    position: {x: 580, y: 315}
+    nodeEventList: []
     edgeList: []

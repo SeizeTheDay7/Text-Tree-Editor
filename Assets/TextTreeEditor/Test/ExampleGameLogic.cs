@@ -9,7 +9,7 @@ public class ExampleGameLogic : MonoBehaviour
 
     public void InitTextTree()
     {
-        textNodeDict = RuntimeJSONManager.LoadJsonToDict(textTree);
+        // textNodeDict = RuntimeJSONManager.LoadJsonToDict(textTree);
     }
 
     public void ProceedToNextNode()

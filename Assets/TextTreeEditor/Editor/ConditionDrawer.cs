@@ -1,8 +1,6 @@
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-using UnityEngine;
-using System.Reflection;
 
 // This drawer handles properties of type 'Condition'
 [CustomPropertyDrawer(typeof(Condition))]

@@ -1,10 +1,11 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEditor.UIElements;
-using System;
-using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
+using UnityEditor.SceneManagement;
 
 
 /// <summary>
@@ -47,5 +48,61 @@ public static class TextTreeSOUtil
         AssetDatabase.Refresh();
 
         Debug.Log($"Text tree saved to {AssetDatabase.GetAssetPath(textTreeSO)}");
+    }
+
+    // internal static List<UnityEvent> ConvertToUnityEventList(List<TTEvent> ttEventList)
+    // {
+    //     List<UnityEvent> unityEventList = new List<UnityEvent>();
+
+    //     foreach (var ttEvent in ttEventList)
+    //     {
+    //         var ttmanager = GameObject.FindFirstObjectByType<TextTreeManager>();
+    //         GameObject target = ttEvent.target.Resolve(ttmanager);
+
+    //         UnityEvent unityEvent = new UnityEvent();
+    //         MethodInfo methodInfo = target.GetType().GetMethod(ttEvent.methodName);
+
+    //     }
+
+    //     return unityEventList;
+    // }
+
+
+    internal static void SetReferenceValue(SerializedProperty exposedRefProp, Object value)
+    {
+
+        TextTreeManager manager = null;
+        var activeScene = UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene();
+        foreach (var rootObj in activeScene.GetRootGameObjects())
+        {
+            manager = rootObj.GetComponentInChildren<TextTreeManager>(true);
+            if (manager != null) break;
+        }
+        if (manager == null) { Debug.LogError("TextTreeManager not found in the active scene."); return; }
+
+        var exposedNameProp = exposedRefProp.FindPropertyRelative("exposedName");
+        if (string.IsNullOrEmpty(exposedNameProp.stringValue))
+        {
+            exposedNameProp.stringValue = System.Guid.NewGuid().ToString();
+        }
+
+        var propertyName = new PropertyName(exposedNameProp.stringValue);
+        manager.SetReferenceValue(propertyName, value); // Set propertyName into manager in current scene
+
+        exposedRefProp.serializedObject.ApplyModifiedProperties();
+        if (manager.gameObject.scene.isLoaded)
+        {
+            EditorSceneManager.MarkSceneDirty(manager.gameObject.scene);
+        }
+    }
+
+    internal static GameObject GetReferenceValue()
+    {
+        return null;
+    }
+
+    internal static void ClearReferenceValue(PropertyName id)
+    {
+
     }
 }

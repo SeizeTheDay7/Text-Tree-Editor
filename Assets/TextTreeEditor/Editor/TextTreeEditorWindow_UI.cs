@@ -8,14 +8,15 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private ObjectField textTreeField;
     private TextField nodeTextField;
-    private PropertyField conditionField;
+    private PropertyField eventDrawer;
+    private PropertyField conditionDrawer;
     private Dictionary<string, NodeElement> nodeElementDict;
 
     private void SetUI()
     {
         SetTextTreeField();
         SetTextField();
-        SetConditionField();
+        SetEdgeField();
 
         TextTreeFieldEvent();
         NodeTextFieldEvent();
@@ -43,10 +44,13 @@ public partial class TextTreeEditorWindow : EditorWindow
         input.style.whiteSpace = WhiteSpace.Pre;
     }
 
-    private void SetConditionField()
+    private void SetEdgeField()
     {
-        conditionField = rootVisualElement.Q<PropertyField>("ConditionField");
-        if (conditionField == null) Debug.LogError("ConditionField not found");
+        conditionDrawer = rootVisualElement.Q<PropertyField>("ConditionDrawer");
+        if (conditionDrawer == null) Debug.LogError("ConditionField not found");
+
+        eventDrawer = rootVisualElement.Q<PropertyField>("EventDrawer");
+        if (eventDrawer == null) Debug.LogError("EventDrawer not found");
     }
     #endregion
 

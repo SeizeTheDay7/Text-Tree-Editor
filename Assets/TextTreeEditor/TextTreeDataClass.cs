@@ -21,7 +21,7 @@ public class TextNodeData
     public string key;
     public string text;
     public Vector2 position;
-    public List<UnityEvent> nodeEvent;
+    public List<TTEvent> nodeEventList;
     public List<TextEdge> edgeList;
 }
 
@@ -29,14 +29,23 @@ public class TextNodeData
 public class TextEdge
 {
     public string nextKey;
-    public List<UnityEvent> edgeEvent;
+    public List<TTEvent> edgeEventList;
     public List<Condition> condList;
 }
 
 [Serializable]
-public class Condition
+public struct Condition
 {
     public string field;
     public CompFunc compFunc;
     public string value;
+}
+
+[Serializable]
+public struct TTEvent
+{
+    public ExposedReference<UnityEngine.Object> target;
+    public string methodName;
+    public List<string> args;
+    public List<Type> argTyps;
 }
