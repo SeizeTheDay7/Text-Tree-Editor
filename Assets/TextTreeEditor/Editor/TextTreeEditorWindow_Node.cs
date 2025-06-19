@@ -20,7 +20,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     private void AddNode()
     {
-        if (textTreeField.value == null) { Debug.Log("No text tree loaded"); return; }
+        if (narratorField.value == null) { Debug.Log("No narrator loaded"); return; }
         var node = new NodeElement(contentLayerElement, cursorElement);
         AddNewNodeToTextTree(node);
 

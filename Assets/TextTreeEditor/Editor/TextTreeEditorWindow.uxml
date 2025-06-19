@@ -3,12 +3,12 @@
     <VisualElement name="Container" picking-mode="Ignore" style="flex-grow: 1;">
         <VisualElement name="Background" style="flex-grow: 1;" />
         <VisualElement name="UIPanel" style="border-left-width: 1px; border-top-width: 0; border-left-color: rgb(111, 111, 111); border-right-color: rgb(111, 111, 111); border-top-color: rgb(111, 111, 111); border-bottom-color: rgb(111, 111, 111); border-right-width: 0; border-bottom-width: 0;">
-            <Button text="Add Node" name="addNodeButton" enabled="true" />
             <VisualElement class="flex" style="flex-grow: 0;">
-                <uie:ObjectField name="TextTreeField" label="Text Tree" style="width: auto;" />
-                <Button text="new" name="NewTextTreeButton" style="width: auto;" />
+                <uie:ObjectField name="NarratorField" label="Narrator" style="width: auto;" />
                 <Button text="save" name="SaveTextTreeButton" style="width: auto;" />
+                <Button text="Reload" name="ReloadNarratorButton" style="width: auto;" />
             </VisualElement>
+            <Button text="Add Node" name="addNodeButton" enabled="true" />
             <TextField label="Node Text" placeholder-text="filler text" name="NodeText" />
             <uie:PropertyField name="ConditionField" />
         </VisualElement>

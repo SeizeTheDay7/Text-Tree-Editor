@@ -92,8 +92,8 @@ internal sealed class EdgeElement : VisualElement
         TextEdge newTextEdge = new TextEdge
         {
             nextKey = toNode.textNodeData.key,
-            condList = new List<Condition>(),
-            edgeEvent = new List<UnityEvent>()
+            conditionList = new List<Condition>(),
+            edgeEventList = new List<TTEvent>()
         };
         fromNode.textNodeData.edgeList.Add(newTextEdge);
         textEdge = newTextEdge;

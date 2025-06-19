@@ -6,29 +6,32 @@ using System.Collections.Generic;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
-    private ObjectField textTreeField;
+    private ObjectField narratorField;
     private TextField nodeTextField;
     private PropertyField conditionField;
     private Dictionary<string, NodeElement> nodeElementDict;
+    private TTNarrator narrator;
 
     private void SetUI()
     {
-        SetTextTreeField();
+        SetTTNarratorField();
         SetTextField();
         SetConditionField();
 
-        TextTreeFieldEvent();
+        NarratorFieldEvent();
         NodeTextFieldEvent();
-        NewTextTreeButtonEvent();
+
         SaveTextTreeButtonEvent();
+        ReloadNarratorButtonEvent();
     }
 
     #region Allocate element
-    private void SetTextTreeField()
+
+    private void SetTTNarratorField()
     {
-        textTreeField = rootVisualElement.Q<ObjectField>("TextTreeField");
-        if (textTreeField == null) Debug.LogError("TextTreeField not found");
-        textTreeField.objectType = typeof(TextTreeSO);
+        narratorField = rootVisualElement.Q<ObjectField>("NarratorField");
+        if (narratorField == null) Debug.LogError("TextTreeManagerField not found");
+        narratorField.objectType = typeof(TTNarrator);
     }
 
     private void SetTextField()
@@ -52,11 +55,11 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     #region Tree field event
     /// <summary>
-    /// Occurs when new text tree allocated
+    /// Occurs when new Narrator allocated
     /// </summary>
-    private void TextTreeFieldEvent()
+    private void NarratorFieldEvent()
     {
-        textTreeField.RegisterValueChangedCallback(evt =>
+        narratorField.RegisterValueChangedCallback(evt =>
         {
             // 1. Reset the layers unconditionally
             contentLayerElement.style.translate = new StyleTranslate(new Translate(0, 0, 0));
@@ -65,9 +68,9 @@ public partial class TextTreeEditorWindow : EditorWindow
             if (evt.newValue == null) { return; }
 
             // 2. Draw nodes and edges from text tree
-            TextTreeSO textTreeSO = textTreeField.value as TextTreeSO;
+            narrator = narratorField.value as TTNarrator;
             nodeElementDict = new Dictionary<string, NodeElement>();
-            LoadNode(textTreeSO.textNodeList);
+            LoadNode(narrator.textTreeSO.textNodeList);
             LoadEdge();
 
             // 3. Reset state values
@@ -109,7 +112,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     }
     #endregion
 
-    #region Field event
+    #region Field, Button event
 
     /// <summary>
     /// Occurs when text has edited
@@ -123,14 +126,6 @@ public partial class TextTreeEditorWindow : EditorWindow
         });
     }
 
-    private void NewTextTreeButtonEvent()
-    {
-        var newTextTreeButton = rootVisualElement.Q<Button>("NewTextTreeButton");
-        if (newTextTreeButton == null) Debug.LogError("NewTextTreeButton not found");
-
-        newTextTreeButton.clicked += () => TextTreeSOUtil.CreateNewTreeFile(textTreeField);
-    }
-
     private void SaveTextTreeButtonEvent()
     {
         var saveTextTreeButton = rootVisualElement.Q<Button>("SaveTextTreeButton");
@@ -142,8 +137,23 @@ public partial class TextTreeEditorWindow : EditorWindow
     private void SaveTextTree()
     {
         if (nodeElementDict == null) { Debug.LogError("nodeElementDict is null"); return; }
-        TextTreeSOUtil.SaveTreeToSO(nodeElementDict, textTreeField);
+        TextTreeSOUtil.SaveTreeToSO(nodeElementDict, narrator.textTreeSO);
+    }
+
+    private void ReloadNarratorButtonEvent()
+    {
+        var reloadTTManagerButton = rootVisualElement.Q<Button>("ReloadNarratorButton");
+        if (reloadTTManagerButton == null) Debug.LogError("ReloadNarratorButton not found");
+
+        reloadTTManagerButton.clicked += () =>
+        {
+
+        };
+    }
+
+    private void ReloadNarrator()
+    {
+
     }
     #endregion
-
 }

@@ -31,15 +31,8 @@ public static class TextTreeSOUtil
         textTreeField.value = textTreeSO;
     }
 
-    internal static void SaveTreeToSO(Dictionary<string, NodeElement> nodeElementDict, ObjectField textTreeField)
+    internal static void SaveTreeToSO(Dictionary<string, NodeElement> nodeElementDict, TextTreeSO textTreeSO)
     {
-        if (textTreeField.value == null)
-        {
-            Debug.LogError("No text tree asset selected. Please select an asset to save.");
-            return;
-        }
-
-        var textTreeSO = (TextTreeSO)textTreeField.value;
         textTreeSO.textNodeList = nodeElementDict.Values.Select(nodeElem => nodeElem.textNodeData).ToList();
 
         EditorUtility.SetDirty(textTreeSO);
