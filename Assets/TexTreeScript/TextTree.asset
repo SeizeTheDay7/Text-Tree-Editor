@@ -22,7 +22,7 @@ MonoBehaviour:
       conditionList: []
       edgeEventList:
       - actorName: sam
-        eventName: suicide2
+        eventName: compose/newaction
     - nextKey: d3194f17-2278-4807-9111-770d0bf94e60
       conditionList: []
       edgeEventList:

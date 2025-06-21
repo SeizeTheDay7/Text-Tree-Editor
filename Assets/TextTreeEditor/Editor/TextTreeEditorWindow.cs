@@ -76,10 +76,24 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     public List<string> GetTTEventNameList(string actorName)
     {
-        var actor = narrator.actorList.FirstOrDefault(a => a.actorName == actorName);
+        TTActor actor = narrator.actorList.FirstOrDefault(a => a.actorName == actorName);
         if (actor == null) return new List<string>();
+        List<string> eventNameList = actor.eventList.Select(e => e.eventName).ToList();
 
-        return actor.eventList.Select(e => e.eventName).ToList();
+        var eventComponents = actor.GetComponents<TTEventComponent>();
+        if (eventComponents != null)
+        {
+            foreach (var component in eventComponents)
+            {
+                foreach (var ttevent in component.eventList)
+                {
+                    eventNameList.Add(component.eventComponentName + "/" + ttevent.eventName);
+                }
+            }
+        }
+
+        return eventNameList;
+
     }
 
     #endregion
