@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
+using System.Linq;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
@@ -16,6 +18,10 @@ public partial class TextTreeEditorWindow : EditorWindow
     private NodeElement currentSelectNode;
     private EdgeElement currentCreatingEdge;
     private EdgeElement currentSelectEdge;
+
+    public static TextTreeEditorWindow Instance { get; private set; }
+    void OnEnable() => Instance = this;
+    void OnDisable() => Instance = null;
 
 
     [MenuItem("Window/TextTree Editor")]
@@ -60,6 +66,23 @@ public partial class TextTreeEditorWindow : EditorWindow
         if (exceptFor != ExceptFor.Edge)
             DeselectCurrentEdge();
     }
+
+    #region Actor Function
+
+    public List<string> GetTTActorNameList()
+    {
+        return narrator.actorList.Select(actor => actor?.actorName).ToList();
+    }
+
+    public List<string> GetTTEventNameList(string actorName)
+    {
+        var actor = narrator.actorList.FirstOrDefault(a => a.actorName == actorName);
+        if (actor == null) return new List<string>();
+
+        return actor.eventList.Select(e => e.eventName).ToList();
+    }
+
+    #endregion
 
     #region Base Component
     private void SetClickBackground()

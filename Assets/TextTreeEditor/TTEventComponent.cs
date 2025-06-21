@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
-public class TTActor : MonoBehaviour
+public class TTEventComponent : MonoBehaviour
 {
-    public string actorName;
+    public string eventComponentName;
     public List<TTEvent> eventList;
 }

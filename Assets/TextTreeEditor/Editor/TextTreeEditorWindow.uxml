@@ -6,11 +6,11 @@
             <VisualElement class="flex" style="flex-grow: 0;">
                 <uie:ObjectField name="NarratorField" label="Narrator" style="width: auto;" />
                 <Button text="save" name="SaveTextTreeButton" style="width: auto;" />
-                <Button text="Reload" name="ReloadNarratorButton" style="width: auto;" />
             </VisualElement>
             <Button text="Add Node" name="addNodeButton" enabled="true" />
             <TextField label="Node Text" placeholder-text="filler text" name="NodeText" />
-            <uie:PropertyField name="ConditionField" />
+            <uie:PropertyField name="ConditionListField" />
+            <uie:PropertyField name="EventListField" />
         </VisualElement>
     </VisualElement>
 </UXML>

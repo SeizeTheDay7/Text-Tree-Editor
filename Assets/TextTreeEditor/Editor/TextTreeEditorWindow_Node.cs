@@ -90,6 +90,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         currentSelectNode = node;
         currentSelectNode.AddToClassList("highlighted");
+        nodeTextField.style.display = DisplayStyle.Flex;
         nodeTextField.value = currentSelectNode.textNodeData.text;
     }
 
@@ -97,6 +98,6 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         if (currentSelectNode != null) { currentSelectNode.RemoveFromClassList("highlighted"); }
         currentSelectNode = null;
-        nodeTextField.value = "";
+        nodeTextField.style.display = DisplayStyle.None;
     }
 }

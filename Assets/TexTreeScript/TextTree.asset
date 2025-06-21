@@ -14,21 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textNodeList:
   - key: 4b8d8fc3-2a8c-4a35-accc-adfe9de75970
-    text: ddd
-    position: {x: 500.33337, y: 191.33334}
+    text: cc
+    position: {x: 561.6667, y: 176}
     nodeEventList: []
     edgeList:
     - nextKey: 161d3a81-7774-4887-9dad-601346297888
-      edgeEventList: []
+      conditionList: []
+      edgeEventList:
+      - actorName: sam
+        eventName: suicide2
     - nextKey: d3194f17-2278-4807-9111-770d0bf94e60
-      edgeEventList: []
+      conditionList: []
+      edgeEventList:
+      - actorName: 
+        eventName: 
   - key: 161d3a81-7774-4887-9dad-601346297888
-    text: ccc
-    position: {x: 346.66666, y: 475.33334}
+    text: b
+    position: {x: 392.3333, y: 482}
     nodeEventList: []
     edgeList: []
   - key: d3194f17-2278-4807-9111-770d0bf94e60
     text: xx
-    position: {x: 680, y: 481.3333}
+    position: {x: 607.6667, y: 524}
     nodeEventList: []
     edgeList: []

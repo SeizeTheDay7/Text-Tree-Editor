@@ -8,7 +8,8 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     private ObjectField narratorField;
     private TextField nodeTextField;
-    private PropertyField conditionField;
+    private PropertyField conditionListField;
+    private PropertyField eventListField;
     private Dictionary<string, NodeElement> nodeElementDict;
     private TTNarrator narrator;
 
@@ -16,13 +17,13 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         SetTTNarratorField();
         SetTextField();
-        SetConditionField();
+        SetConditionListField();
+        SetEventListField();
+
+        SaveTextTreeButtonEvent();
 
         NarratorFieldEvent();
         NodeTextFieldEvent();
-
-        SaveTextTreeButtonEvent();
-        ReloadNarratorButtonEvent();
     }
 
     #region Allocate element
@@ -44,12 +45,20 @@ public partial class TextTreeEditorWindow : EditorWindow
         var input = nodeTextField.Q("unity-text-input");
         input.style.unityTextAlign = TextAnchor.UpperLeft; // Resolves line break bug
         input.style.whiteSpace = WhiteSpace.Pre;
+
+        nodeTextField.style.display = DisplayStyle.None;
     }
 
-    private void SetConditionField()
+    private void SetConditionListField()
     {
-        conditionField = rootVisualElement.Q<PropertyField>("ConditionField");
-        if (conditionField == null) Debug.LogError("ConditionField not found");
+        conditionListField = rootVisualElement.Q<PropertyField>("ConditionListField");
+        if (conditionListField == null) Debug.LogError("ConditionField not found");
+    }
+
+    private void SetEventListField()
+    {
+        eventListField = rootVisualElement.Q<PropertyField>("EventListField");
+        if (eventListField == null) Debug.LogError("EventField not found");
     }
     #endregion
 
@@ -138,22 +147,6 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         if (nodeElementDict == null) { Debug.LogError("nodeElementDict is null"); return; }
         TextTreeSOUtil.SaveTreeToSO(nodeElementDict, narrator.textTreeSO);
-    }
-
-    private void ReloadNarratorButtonEvent()
-    {
-        var reloadTTManagerButton = rootVisualElement.Q<Button>("ReloadNarratorButton");
-        if (reloadTTManagerButton == null) Debug.LogError("ReloadNarratorButton not found");
-
-        reloadTTManagerButton.clicked += () =>
-        {
-
-        };
-    }
-
-    private void ReloadNarrator()
-    {
-
     }
     #endregion
 }

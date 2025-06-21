@@ -5,8 +5,8 @@ using UnityEditor.UIElements;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
-    // TempCondSO tempCondSO;
-    SerializedObject so;
+    TempCondSO tempCondSO;
+    TempEventSO tempEventSO;
 
     private void MakeNewEdge(NodeElement fromNode)
     {
@@ -83,15 +83,28 @@ public partial class TextTreeEditorWindow : EditorWindow
         // SerializedProperty propertyToBind = so.FindProperty("conditionList");
 
         // conditionField.BindProperty(propertyToBind);
+
+        if (tempEventSO != null) DestroyImmediate(tempEventSO);
+        tempEventSO = CreateInstance<TempEventSO>();
+        tempEventSO.eventList = edge.textEdge.edgeEventList;
+
+        SerializedObject so = new SerializedObject(tempEventSO);
+        SerializedProperty propertyToBind = so.FindProperty("eventList");
+
+        eventListField.BindProperty(propertyToBind);
     }
 
     private void ResetCurrentEdgeField()
     {
         // if (tempCondSO != null) DestroyImmediate(tempCondSO);
         // tempCondSO = null;
-        // so = null;
         // conditionField.Unbind();
         // conditionField.Clear();
+
+        if (tempEventSO != null) DestroyImmediate(tempEventSO);
+        tempEventSO = null;
+        eventListField.Unbind();
+        eventListField.Clear();
     }
 
     #endregion
