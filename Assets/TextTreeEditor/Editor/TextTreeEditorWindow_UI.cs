@@ -149,4 +149,28 @@ public partial class TextTreeEditorWindow : EditorWindow
         TextTreeSOUtil.SaveTreeToSO(nodeElementDict, narrator.textTreeSO);
     }
     #endregion
+
+    #region Init / Deselect Field
+
+    private void InitEventField(List<TTDEvent> eventList)
+    {
+        if (tempEventSO != null) DestroyImmediate(tempEventSO);
+        tempEventSO = CreateInstance<TempEventSO>();
+        tempEventSO.eventList = eventList;
+
+        SerializedObject so = new SerializedObject(tempEventSO);
+        SerializedProperty propertyToBind = so.FindProperty("eventList");
+
+        eventListField.BindProperty(propertyToBind);
+    }
+
+    private void ResetEventField()
+    {
+        if (tempEventSO != null) DestroyImmediate(tempEventSO);
+        tempEventSO = null;
+        eventListField.Unbind();
+        eventListField.Clear();
+    }
+
+    #endregion
 }

@@ -31,10 +31,12 @@ MonoBehaviour:
   - key: 161d3a81-7774-4887-9dad-601346297888
     text: b
     position: {x: 392.3333, y: 482}
-    nodeEventList: []
+    nodeEventList:
+    - actorName: sam
+      eventName: suicide2
     edgeList: []
   - key: d3194f17-2278-4807-9111-770d0bf94e60
     text: xx
-    position: {x: 607.6667, y: 524}
+    position: {x: 652.3334, y: 560}
     nodeEventList: []
     edgeList: []

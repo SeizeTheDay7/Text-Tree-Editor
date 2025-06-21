@@ -84,14 +84,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 
         // conditionField.BindProperty(propertyToBind);
 
-        if (tempEventSO != null) DestroyImmediate(tempEventSO);
-        tempEventSO = CreateInstance<TempEventSO>();
-        tempEventSO.eventList = edge.textEdge.edgeEventList;
-
-        SerializedObject so = new SerializedObject(tempEventSO);
-        SerializedProperty propertyToBind = so.FindProperty("eventList");
-
-        eventListField.BindProperty(propertyToBind);
+        InitEventField(edge.textEdge.edgeEventList);
     }
 
     private void ResetCurrentEdgeField()
@@ -101,10 +94,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         // conditionField.Unbind();
         // conditionField.Clear();
 
-        if (tempEventSO != null) DestroyImmediate(tempEventSO);
-        tempEventSO = null;
-        eventListField.Unbind();
-        eventListField.Clear();
+        ResetEventField();
     }
 
     #endregion
