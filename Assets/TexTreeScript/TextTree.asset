@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2b504829b2d5948881bbde3616829c, type: 3}
   m_Name: TextTree
   m_EditorClassIdentifier: 
+  initNodeKey: 161d3a81-7774-4887-9dad-601346297888
   textNodeList:
   - key: 4b8d8fc3-2a8c-4a35-accc-adfe9de75970
     actorName: sam
-    text: cccczxxc
-    position: {x: 560.3334, y: 229.33334}
+    text: c
+    position: {x: 584.9999, y: 275.33337}
     nodeEventList:
     - actorName: sam
       eventName: die
@@ -34,7 +35,7 @@ MonoBehaviour:
   - key: 161d3a81-7774-4887-9dad-601346297888
     actorName: 
     text: b
-    position: {x: 439.6667, y: 503.33337}
+    position: {x: 458.99994, y: 480}
     nodeEventList:
     - actorName: sam
       eventName: suicide2

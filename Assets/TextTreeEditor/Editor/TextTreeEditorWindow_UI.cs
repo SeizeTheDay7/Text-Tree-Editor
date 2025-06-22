@@ -95,7 +95,7 @@ public partial class TextTreeEditorWindow : EditorWindow
             // 2. Draw nodes and edges from text tree
             narrator = narratorField.value as TTNarrator;
             nodeElementDict = new Dictionary<string, NodeElement>();
-            LoadNode(narrator.textTreeSO.textNodeList);
+            LoadNode(narrator.textTreeSO);
             LoadEdge();
 
             // 3. Reset state values
@@ -110,8 +110,9 @@ public partial class TextTreeEditorWindow : EditorWindow
     #endregion
 
     #region Load node & edge
-    private void LoadNode(List<TextNodeData> textNodeDataList)
+    private void LoadNode(TextTreeSO textTreeSO)
     {
+        List<TextNodeData> textNodeDataList = textTreeSO.textNodeList;
         if (textNodeDataList == null) return;
 
         foreach (var textNodeData in textNodeDataList)
@@ -120,6 +121,8 @@ public partial class TextTreeEditorWindow : EditorWindow
             SetNodeEvent(nodeElement);
             nodeLayerElement.Add(nodeElement);
             nodeElementDict[textNodeData.key] = nodeElement;
+
+            if (textTreeSO.initNodeKey == textNodeData.key) { SetInitNode(nodeElement); }
         }
     }
 

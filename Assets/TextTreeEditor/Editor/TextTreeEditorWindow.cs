@@ -15,6 +15,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     private bool isPanning = false;
     private Vector2 panStartMouse;
     private Vector2 panStartContentPos;
+    private NodeElement initNode;
     private NodeElement currentSelectNode;
     private EdgeElement currentCreatingEdge;
     private EdgeElement currentSelectEdge;

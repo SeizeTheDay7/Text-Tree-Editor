@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System;
+using Unity.VisualScripting;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
@@ -83,9 +84,25 @@ public partial class TextTreeEditorWindow : EditorWindow
                 ResetPick(ExceptFor.Nothing);
                 MakeNewEdge(node);
             });
+
+            evt.menu.AppendAction("Set Init Node", a =>
+            {
+                SetInitNode(node);
+            });
         });
 
         node.AddManipulator(manipulator);
+    }
+
+    private void SetInitNode(NodeElement node)
+    {
+        if (narratorField.value == null) { Debug.Log("No narrator loaded"); return; }
+
+        initNode?.RemoveFromClassList("init-node");
+        initNode = node;
+        node.AddToClassList("init-node");
+
+        narratorField.value.GetComponent<TTNarrator>().textTreeSO.initNodeKey = node.textNodeData.key;
     }
 
     private void SelectNode(NodeElement node)
