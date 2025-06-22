@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textNodeList:
   - key: 4b8d8fc3-2a8c-4a35-accc-adfe9de75970
-    text: cc
-    position: {x: 561.6667, y: 176}
-    nodeEventList: []
+    actorName: sam
+    text: cccczxxc
+    position: {x: 560.3334, y: 229.33334}
+    nodeEventList:
+    - actorName: sam
+      eventName: die
     edgeList:
     - nextKey: 161d3a81-7774-4887-9dad-601346297888
       conditionList: []
@@ -26,17 +29,27 @@ MonoBehaviour:
     - nextKey: d3194f17-2278-4807-9111-770d0bf94e60
       conditionList: []
       edgeEventList:
-      - actorName: 
-        eventName: 
+      - actorName: sam
+        eventName: compose/newaction
   - key: 161d3a81-7774-4887-9dad-601346297888
+    actorName: 
     text: b
-    position: {x: 392.3333, y: 482}
+    position: {x: 439.6667, y: 503.33337}
     nodeEventList:
     - actorName: sam
       eventName: suicide2
     edgeList: []
   - key: d3194f17-2278-4807-9111-770d0bf94e60
-    text: xx
-    position: {x: 652.3334, y: 560}
+    actorName: sam
+    text: ddd
+    position: {x: 696.3333, y: 491.33337}
+    nodeEventList:
+    - actorName: sam
+      eventName: compose/newaction
+    edgeList: []
+  - key: f5a06b75-f982-40c1-b004-143dbc7993ac
+    actorName: 
+    text: 
+    position: {x: 918.3334, y: 202}
     nodeEventList: []
     edgeList: []

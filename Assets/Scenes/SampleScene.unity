@@ -177,6 +177,8 @@ GameObject:
   m_Component:
   - component: {fileID: 502528392}
   - component: {fileID: 502528393}
+  - component: {fileID: 502528395}
+  - component: {fileID: 502528394}
   m_Layer: 0
   m_Name: Sam
   m_TagString: Untagged
@@ -212,7 +214,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textTreeSO: {fileID: 11400000, guid: 80eb89b52c3240e4a9dc2d1662131a3f, type: 2}
-  actorList: []
+  actorList:
+  - {fileID: 502528395}
+--- !u!114 &502528394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502528390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a566a119f85fd1a4fb2bf23e8796b06c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventComponentName: compose
+  eventList:
+  - eventName: newaction
+    eventList:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &502528395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502528390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0973cb744456c8b49a12a5efbbabb467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actorName: sam
+  eventList:
+  - eventName: die
+    eventList:
+      m_PersistentCalls:
+        m_Calls: []
+  - eventName: suicide
+    eventList:
+      m_PersistentCalls:
+        m_Calls: []
+  - eventName: suicide2
+    eventList:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

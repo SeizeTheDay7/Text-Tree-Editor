@@ -20,6 +20,7 @@ public class Serialization<T>
 public class TextNodeData
 {
     public string key;
+    public string actorName;
     public string text;
     public Vector2 position;
     public List<TTDEvent> nodeEventList;

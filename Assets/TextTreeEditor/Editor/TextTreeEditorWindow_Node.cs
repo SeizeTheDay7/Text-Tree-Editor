@@ -59,10 +59,12 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         node.RegisterCallback<MouseDownEvent>(evt =>
         {
+            // Left click + making edge
             if (evt.button == 0 && currentCreatingEdge != null && currentCreatingEdge.fromNode != node)
             {
                 ConfirmEdge(node);
             }
+            // Left click to select node
             else if (evt.button == 0)
             {
                 isNodeMoving = true;
@@ -90,8 +92,12 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         currentSelectNode = node;
         currentSelectNode.AddToClassList("highlighted");
+
         nodeTextField.style.display = DisplayStyle.Flex;
         nodeTextField.value = currentSelectNode.textNodeData.text;
+        nodeActorDropdown.style.display = DisplayStyle.Flex;
+        nodeActorDropdown.value = currentSelectNode.textNodeData.actorName;
+
         InitEventField(node.textNodeData.nodeEventList);
     }
 
@@ -99,7 +105,10 @@ public partial class TextTreeEditorWindow : EditorWindow
     {
         if (currentSelectNode != null) { currentSelectNode.RemoveFromClassList("highlighted"); }
         currentSelectNode = null;
+
         nodeTextField.style.display = DisplayStyle.None;
+        nodeActorDropdown.style.display = DisplayStyle.None;
+
         ResetEventField();
     }
 }

@@ -28,10 +28,9 @@ internal sealed class NodeElement : VisualElement
         }
 
         textNodeData = new TextNodeData();
-
-        // TODO :: need to add placeholder text
-
         AddToClassList("Node");
+
+        AddLabel("Actor Name", "script text");
     }
 
     // Constructor for loaded node from file
@@ -42,5 +41,37 @@ internal sealed class NodeElement : VisualElement
         style.top = pos.y;
 
         AddToClassList("Node");
+
+        AddLabel(textNodeData.actorName, textNodeData.text);
+    }
+
+    private void AddLabel(string actorName, string textdata)
+    {
+        Label actorNameLabel = new Label(actorName);
+        Label textLabel = new Label(textdata);
+        actorNameLabel.name = "actorname-label";
+        textLabel.name = "text-label";
+
+        actorNameLabel.AddToClassList("actorname-label");
+        textLabel.AddToClassList("text-label");
+
+        Add(actorNameLabel);
+        Add(textLabel);
+    }
+
+    public void UpdateText(string textdata)
+    {
+        textNodeData.text = textdata;
+
+        var textLabel = this.Q<Label>("text-label");
+        textLabel.text = textdata;
+    }
+
+    public void UpdateActorName(string name)
+    {
+        textNodeData.actorName = name;
+
+        var actorNameLabel = this.Q<Label>("actorname-label");
+        actorNameLabel.text = name;
     }
 }

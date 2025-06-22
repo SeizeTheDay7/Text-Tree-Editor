@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public partial class TextTreeEditorWindow : EditorWindow
 {
     private ObjectField narratorField;
+    private DropdownField nodeActorDropdown;
     private TextField nodeTextField;
     private PropertyField conditionListField;
     private PropertyField eventListField;
@@ -16,6 +17,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     private void SetUI()
     {
         SetTTNarratorField();
+        SetNodeActorDropdown();
         SetTextField();
         SetConditionListField();
         SetEventListField();
@@ -33,6 +35,20 @@ public partial class TextTreeEditorWindow : EditorWindow
         narratorField = rootVisualElement.Q<ObjectField>("NarratorField");
         if (narratorField == null) Debug.LogError("TextTreeManagerField not found");
         narratorField.objectType = typeof(TTNarrator);
+    }
+
+    private void SetNodeActorDropdown()
+    {
+        nodeActorDropdown = rootVisualElement.Q<DropdownField>("NodeActorDropdown");
+        if (nodeActorDropdown == null) Debug.LogError("NodeActorDropdown not found");
+
+        nodeActorDropdown.RegisterValueChangedCallback(evt =>
+        {
+            if (currentSelectNode == null) return;
+            currentSelectNode.UpdateActorName(evt.newValue);
+        });
+
+        nodeActorDropdown.style.display = DisplayStyle.None;
     }
 
     private void SetTextField()
@@ -86,6 +102,7 @@ public partial class TextTreeEditorWindow : EditorWindow
             currentSelectNode = null;
             currentCreatingEdge = null;
             currentSelectEdge = null;
+            nodeActorDropdown.choices = GetTTActorNameList();
             nodeTextField.value = "";
             ResetCurrentEdgeField();
         });
@@ -131,7 +148,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         nodeTextField.RegisterValueChangedCallback(evt =>
         {
             if (currentSelectNode == null) return;
-            currentSelectNode.textNodeData.text = evt.newValue;
+            currentSelectNode.UpdateText(evt.newValue);
         });
     }
 

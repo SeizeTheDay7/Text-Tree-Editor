@@ -8,6 +8,7 @@
                 <Button text="save" name="SaveTextTreeButton" style="width: auto;" />
             </VisualElement>
             <Button text="Add Node" name="addNodeButton" enabled="true" />
+            <DropdownField label="Node Actor" name="NodeActorDropdown" />
             <TextField label="Node Text" placeholder-text="filler text" name="NodeText" />
             <uie:PropertyField name="ConditionListField" />
             <uie:PropertyField name="EventListField" />
