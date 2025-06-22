@@ -133,6 +133,7 @@ public partial class TextTreeEditorWindow : EditorWindow
             var fromNode = kvp.Value;
             foreach (var edge in fromNode.textNodeData.edgeList)
             {
+                if (!nodeElementDict.ContainsKey(edge.nextKey)) continue; // Skip if next node not found
                 var toNode = nodeElementDict[edge.nextKey];
                 var edgeElement = new EdgeElement(fromNode, toNode, edge, edgeLayerElement, backgroundElement);
                 EdgeEvent(edgeElement);

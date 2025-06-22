@@ -12,45 +12,60 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2b504829b2d5948881bbde3616829c, type: 3}
   m_Name: TextTree
   m_EditorClassIdentifier: 
-  initNodeKey: 4b8d8fc3-2a8c-4a35-accc-adfe9de75970
+  initNodeKey: 89c07694-7f0f-419a-8bb1-fe2c7db01b04
   textNodeList:
-  - key: 4b8d8fc3-2a8c-4a35-accc-adfe9de75970
-    actorName: sam
-    text: c
-    position: {x: 584.9999, y: 275.33337}
-    nodeEventList:
-    - actorName: sam
-      eventName: die
-    edgeList:
-    - nextKey: 161d3a81-7774-4887-9dad-601346297888
-      conditionList: []
-      edgeEventList:
-      - actorName: sam
-        eventName: compose/newaction
-    - nextKey: d3194f17-2278-4807-9111-770d0bf94e60
-      conditionList: []
-      edgeEventList:
-      - actorName: sam
-        eventName: compose/newaction
-  - key: 161d3a81-7774-4887-9dad-601346297888
-    actorName: 
-    text: b
-    position: {x: 458.99994, y: 480}
+  - key: 89c07694-7f0f-419a-8bb1-fe2c7db01b04
+    actorName: Sam
+    text: Hello
+    position: {x: 476.33337, y: 203.33334}
     nodeEventList:
     - actorName: _Narrator
-      eventName: suicide2
+      eventName: ChangeToChoice
+    edgeList:
+    - nextKey: 681fc5f9-4ff0-4904-8a7e-e50495a8d864
+      conditionList: []
+      edgeEventList:
+      - actorName: 
+        eventName: 
+    - nextKey: 2cdc69b8-51de-4b2b-9783-83eeda784a44
+      conditionList: []
+      edgeEventList: []
+  - key: 681fc5f9-4ff0-4904-8a7e-e50495a8d864
+    actorName: Jenny
+    text: No
+    position: {x: 290.33334, y: 371.33334}
+    nodeEventList: []
+    edgeList:
+    - nextKey: d6f13add-c125-4436-9628-33857e3f7e1b
+      conditionList: []
+      edgeEventList: []
+  - key: 2cdc69b8-51de-4b2b-9783-83eeda784a44
+    actorName: Jenny
+    text: Bye
+    position: {x: 674.6667, y: 390.66666}
+    nodeEventList: []
+    edgeList:
+    - nextKey: be9dbdea-f398-4a93-b183-b71b87b242be
+      conditionList: []
+      edgeEventList: []
+  - key: d6f13add-c125-4436-9628-33857e3f7e1b
+    actorName: Sam
+    text: Why?
+    position: {x: 282.33334, y: 544}
+    nodeEventList: []
+    edgeList:
+    - nextKey: 782a2f11-1388-418a-ab7f-bbd351ad937e
+      conditionList: []
+      edgeEventList: []
+  - key: 1c04fbb8-93b2-4adb-a3c7-fc3497c088a1
+    actorName: Sam
+    text: Ok Bye...
+    position: {x: 681.3333, y: 582.6667}
+    nodeEventList: []
     edgeList: []
-  - key: d3194f17-2278-4807-9111-770d0bf94e60
-    actorName: sam
-    text: ddd
-    position: {x: 696.3333, y: 491.33337}
-    nodeEventList:
-    - actorName: sam
-      eventName: compose/newaction
-    edgeList: []
-  - key: f5a06b75-f982-40c1-b004-143dbc7993ac
-    actorName: 
-    text: 
-    position: {x: 918.3334, y: 202}
+  - key: 782a2f11-1388-418a-ab7f-bbd351ad937e
+    actorName: Jenny
+    text: Because I'm hungry
+    position: {x: 300.33334, y: 737.3334}
     nodeEventList: []
     edgeList: []

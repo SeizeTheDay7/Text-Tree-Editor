@@ -62,5 +62,5 @@ public struct TTCondition
 public struct TTEvent
 {
     public string eventName;
-    public UnityEvent eventList;
+    public UnityEvent eventdata;
 }
