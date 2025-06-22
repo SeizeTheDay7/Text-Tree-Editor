@@ -51,6 +51,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         PanningEvent();
         NodeMovingEvent();
         BackgroundInitEvent();
+        DeleteEvent();
 
         // TextTreeEditorWindow_Node.cs
         AddNodeEvent();
@@ -261,6 +262,66 @@ public partial class TextTreeEditorWindow : EditorWindow
                 isNodeMoving = false;
             }
         });
+    }
+
+    #endregion
+
+    #region Delete Event
+
+    private void DeleteEvent()
+    {
+        rootVisualElement.focusable = true;
+        rootVisualElement.RegisterCallback<KeyDownEvent>(evt =>
+        {
+            Debug.Log("rootVisualElement.RegisterCallback<KeyDownEvent>");
+            if (evt.keyCode == KeyCode.Delete)
+            {
+                Debug.Log("Delete key pressed");
+                if (currentSelectNode != null)
+                {
+                    Debug.Log("Deleting current node");
+                    DeleteCurrentNode();
+                    evt.StopPropagation();
+                }
+                if (currentSelectEdge != null)
+                {
+                    Debug.Log("Deleting current edge");
+                    DeleteCurrentEdge();
+                    evt.StopPropagation();
+                }
+            }
+        });
+    }
+
+    private void DeleteCurrentNode()
+    {
+        // Remove from nodeElementDict
+        nodeElementDict.Remove(currentSelectNode.textNodeData.key);
+
+        // Remove edges connected to this node
+        foreach (EdgeElement edge in currentSelectNode.inEdge.Concat(currentSelectNode.outEdge).ToList())
+        {
+            edgeLayerElement.Remove(edge);
+            edge.fromNode.RemoveEdge(edge);
+            edge.toNode.RemoveEdge(edge);
+        }
+
+        // Remove the node itself
+        nodeLayerElement.Remove(currentSelectNode);
+        currentSelectNode = null;
+    }
+
+    private void DeleteCurrentEdge()
+    {
+        if (currentSelectEdge == null) return;
+
+        // Remove the edge from both nodes
+        currentSelectEdge.fromNode.RemoveEdge(currentSelectEdge);
+        currentSelectEdge.toNode.RemoveEdge(currentSelectEdge);
+
+        // Remove the edge from the edge layer
+        edgeLayerElement.Remove(currentSelectEdge);
+        currentSelectEdge = null;
     }
 
     #endregion

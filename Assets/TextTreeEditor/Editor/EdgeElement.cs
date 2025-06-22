@@ -9,7 +9,7 @@ internal sealed class EdgeElement : VisualElement
     private VisualElement background;
     private VisualElement edgeLayer;
     public NodeElement fromNode;
-    private NodeElement toNode;
+    public NodeElement toNode;
     public TextEdge textEdge; // reference of TextEdge in fromNode
     private Vector2 mousePosition;
     private bool _highlight;
@@ -106,13 +106,6 @@ internal sealed class EdgeElement : VisualElement
     {
         fromNode.outEdge.Add(this);
         toNode.inEdge.Add(this);
-    }
-
-    // TODO :: Call this function when delete this edge
-    private void RemoveEdgeRef()
-    {
-        fromNode.outEdge.Remove(this);
-        toNode.inEdge.Remove(this);
     }
     #endregion
 

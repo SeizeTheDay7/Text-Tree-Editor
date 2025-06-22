@@ -59,6 +59,20 @@ internal sealed class NodeElement : VisualElement
         Add(textLabel);
     }
 
+    public void RemoveEdge(EdgeElement edge)
+    {
+        if (inEdge.Contains(edge))
+        {
+            textNodeData.edgeList.Remove(edge.textEdge);
+            inEdge.Remove(edge);
+        }
+        else if (outEdge.Contains(edge))
+        {
+            textNodeData.edgeList.Remove(edge.textEdge);
+            outEdge.Remove(edge);
+        }
+    }
+
     public void UpdateText(string textdata)
     {
         textNodeData.text = textdata;
