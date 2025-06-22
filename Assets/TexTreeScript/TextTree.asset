@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f2b504829b2d5948881bbde3616829c, type: 3}
   m_Name: TextTree
   m_EditorClassIdentifier: 
-  initNodeKey: 161d3a81-7774-4887-9dad-601346297888
+  initNodeKey: 4b8d8fc3-2a8c-4a35-accc-adfe9de75970
   textNodeList:
   - key: 4b8d8fc3-2a8c-4a35-accc-adfe9de75970
     actorName: sam
@@ -37,7 +37,7 @@ MonoBehaviour:
     text: b
     position: {x: 458.99994, y: 480}
     nodeEventList:
-    - actorName: sam
+    - actorName: _Narrator
       eventName: suicide2
     edgeList: []
   - key: d3194f17-2278-4807-9111-770d0bf94e60
