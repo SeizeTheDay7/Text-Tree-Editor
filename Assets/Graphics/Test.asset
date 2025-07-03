@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f2b504829b2d5948881bbde3616829c, type: 3}
+  m_Name: Test
+  m_EditorClassIdentifier: 
+  initNodeKey: a261b77f-8fb2-4667-8ef7-6c11d62e227a
+  textNodeList:
+  - key: a261b77f-8fb2-4667-8ef7-6c11d62e227a
+    actorName: character1
+    text: "\uB300\uC0AC 1"
+    position: {x: 534.3334, y: 180.66669}
+    nodeEventList:
+    - actorName: _Narrator
+      eventName: ChangeToChoice
+    edgeList:
+    - nextKey: 92041ffb-fc28-4106-bad1-b4fbca3e1579
+      conditionList: []
+      edgeEventList: []
+    - nextKey: d0bda51e-e0dc-4b27-8c06-362bddc215c5
+      conditionList: []
+      edgeEventList: []
+  - key: 92041ffb-fc28-4106-bad1-b4fbca3e1579
+    actorName: _Narrator
+    text: "\uC120\uD0DD\uC9C0 1"
+    position: {x: 386.3333, y: 391.33337}
+    nodeEventList:
+    - actorName: character1
+      eventName: angry
+    edgeList:
+    - nextKey: b3e6c4a0-844a-4d03-b836-d0ced8d31a9c
+      conditionList: []
+      edgeEventList:
+      - actorName: character1
+        eventName: angry
+  - key: d0bda51e-e0dc-4b27-8c06-362bddc215c5
+    actorName: _Narrator
+    text: "\uC120\uD0DD\uC9C0 2"
+    position: {x: 687.6667, y: 394.6667}
+    nodeEventList: []
+    edgeList:
+    - nextKey: 37560020-2b3b-4cfd-b517-15de6489bdb9
+      conditionList: []
+      edgeEventList: []
+  - key: b3e6c4a0-844a-4d03-b836-d0ced8d31a9c
+    actorName: character1
+    text: "\uC120\uD0DD\uC9C0 1 - \uB300\uC0AC"
+    position: {x: 431, y: 581.3334}
+    nodeEventList:
+    - actorName: character1
+      eventName: angry
+    edgeList:
+    - nextKey: a8a62f88-42cd-40f6-90f4-6fc685a3600c
+      conditionList: []
+      edgeEventList:
+      - actorName: character1
+        eventName: question
+  - key: 37560020-2b3b-4cfd-b517-15de6489bdb9
+    actorName: character1
+    text: "\uC120\uD0DD\uC9C0 2 - \uB300\uC0AC"
+    position: {x: 685.6667, y: 579.3334}
+    nodeEventList: []
+    edgeList:
+    - nextKey: a8a62f88-42cd-40f6-90f4-6fc685a3600c
+      conditionList: []
+      edgeEventList: []
+  - key: a8a62f88-42cd-40f6-90f4-6fc685a3600c
+    actorName: character1
+    text: "\uB300\uC0AC 2 - \uBD84\uB178"
+    position: {x: 493.6667, y: 725.3334}
+    nodeEventList: []
+    edgeList: []

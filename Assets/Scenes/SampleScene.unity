@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 502528392}
   - component: {fileID: 502528395}
   - component: {fileID: 502528394}
+  - component: {fileID: 502528396}
   m_Layer: 0
   m_Name: Sam
   m_TagString: Untagged
@@ -325,6 +326,22 @@ MonoBehaviour:
     eventdata:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &502528396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502528390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b635c419193ee8e4ba7622be68c26fcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textTreeSO: {fileID: 11400000, guid: 91820973c01ceaa4f92bab9f8ad216ea, type: 2}
+  actorList:
+  - {fileID: 502528395}
+  eventList: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

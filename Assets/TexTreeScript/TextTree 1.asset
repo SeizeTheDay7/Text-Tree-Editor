@@ -19,13 +19,10 @@ MonoBehaviour:
     text: 
     position: {x: 477.33334, y: 218}
     nodeEventList: []
-    edgeList:
-    - nextKey: e2d2b4db-ad81-48ad-80f2-a4756570af2f
-      conditionList: []
-      edgeEventList: []
+    edgeList: []
   - key: e2d2b4db-ad81-48ad-80f2-a4756570af2f
     actorName: _Narrator
     text: 
-    position: {x: 668.3334, y: 700.6667}
+    position: {x: 386.33337, y: 454.6667}
     nodeEventList: []
     edgeList: []
