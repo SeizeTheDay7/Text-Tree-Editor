@@ -41,15 +41,15 @@ public partial class TextTreeEditorWindow : EditorWindow
         SetUI();
 
         // Do not change the order of these
-        SetClickBackground();
-        SetContentArea();
-        SetNodeArea();
-        SetEdgeArea();
-        SetCursor();
+        InitClickBackground();
+        InitContentArea();
+        InitNodeArea();
+        InitEdgeArea();
+        InitCursor();
 
-        CursorEvent();
-        PanningEvent();
-        NodeMovingEvent();
+        SetCursorEvent();
+        SetPanningEvent();
+        SetNodeMovingEvent();
         BackgroundInitEvent();
         DeleteEvent();
 
@@ -104,12 +104,12 @@ public partial class TextTreeEditorWindow : EditorWindow
     #endregion
 
     #region Base Component
-    private void SetClickBackground()
+    private void InitClickBackground()
     {
         backgroundElement = rootVisualElement.Q<VisualElement>("Background");
     }
 
-    private void SetCursor()
+    private void InitCursor()
     {
         cursorElement = new VisualElement();
         cursorElement.style.width = 16;
@@ -123,14 +123,14 @@ public partial class TextTreeEditorWindow : EditorWindow
         rootVisualElement.Add(cursorElement);
     }
 
-    private void SetContentArea()
+    private void InitContentArea()
     {
         contentLayerElement = new VisualElement();
         contentLayerElement.AddToClassList("contentLayer");
         backgroundElement.Add(contentLayerElement);
     }
 
-    private void SetNodeArea()
+    private void InitNodeArea()
     {
         nodeLayerElement = new VisualElement
         {
@@ -140,7 +140,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         contentLayerElement.Add(nodeLayerElement);
     }
 
-    private void SetEdgeArea()
+    private void InitEdgeArea()
     {
         edgeLayerElement = new VisualElement
         {
@@ -174,7 +174,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     /// <summary>
     /// Left click to set cursor
     /// </summary>
-    private void CursorEvent()
+    private void SetCursorEvent()
     {
         backgroundElement.RegisterCallback<MouseDownEvent>(evt =>
         {
@@ -197,7 +197,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     /// <summary>
     /// Right click to pan the screen
     /// </summary>
-    private void PanningEvent()
+    private void SetPanningEvent()
     {
         backgroundElement.RegisterCallback<MouseDownEvent>(evt =>
         {
@@ -235,7 +235,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     #region Node Moving Event
     // ※ It breaks when it becomes a node element event
-    private void NodeMovingEvent()
+    private void SetNodeMovingEvent()
     {
         backgroundElement.RegisterCallback<MouseMoveEvent>(evt =>
         {

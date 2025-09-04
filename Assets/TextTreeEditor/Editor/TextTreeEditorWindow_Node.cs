@@ -7,8 +7,10 @@ using Unity.VisualScripting;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
-    bool isNodeMoving = false;
+    bool isNodeMoving = false; // Window.cs
 
+
+    // Window.cs
     /// <summary>
     /// Add node at the cursor point (or init point if there's no visible cursor)
     /// </summary>
@@ -51,6 +53,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         nodeElementDict[textNodeData.key] = node;
     }
 
+    // UI.cs
     /// <summary>
     /// 1. Left click to select node
     /// 2. Right click to create new edge
@@ -94,6 +97,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         node.AddManipulator(manipulator);
     }
 
+    // UI.cs
     private void SetInitNode(NodeElement node)
     {
         if (narratorField.value == null) { Debug.Log("No narrator loaded"); return; }
@@ -118,6 +122,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         InitEventField(node.textNodeData.nodeEventList);
     }
 
+    // Window.cs
     private void DeselectCurrentNode()
     {
         if (currentSelectNode != null) { currentSelectNode.RemoveFromClassList("highlighted"); }

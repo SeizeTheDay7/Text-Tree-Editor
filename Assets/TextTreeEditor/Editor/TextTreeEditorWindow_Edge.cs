@@ -6,8 +6,9 @@ using UnityEditor.UIElements;
 public partial class TextTreeEditorWindow : EditorWindow
 {
     TempCondSO tempCondSO;
-    TempEventSO tempEventSO;
+    TempEventSO tempEventSO; // UI.cs
 
+    // Node.cs
     private void MakeNewEdge(NodeElement fromNode)
     {
         cursorElement.style.visibility = Visibility.Hidden;
@@ -15,6 +16,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         BeginEdgeMoving();
     }
 
+    // Window.cs
     private void DeleteTempEdge()
     {
         if (currentCreatingEdge == null) return;
@@ -23,6 +25,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         currentCreatingEdge = null;
     }
 
+    // Node.cs
     private void ConfirmEdge(NodeElement toNode)
     {
         currentCreatingEdge.ConfirmEdge(toNode);
@@ -39,6 +42,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         currentCreatingEdge.UpdateLine(evt.localMousePosition);
     }
 
+    // UI.cs
     private void EdgeEvent(EdgeElement edge)
     {
         VisualElement edgeClickArea = edge.clickArea;
@@ -63,6 +67,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         currentSelectEdge = edge;
     }
 
+    // Window.cs
     private void DeselectCurrentEdge()
     {
         if (currentSelectEdge == null) return;
@@ -87,6 +92,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         InitEventField(edge.textEdge.edgeEventList);
     }
 
+    // UI.cs
     private void ResetCurrentEdgeField()
     {
         // if (tempCondSO != null) DestroyImmediate(tempCondSO);

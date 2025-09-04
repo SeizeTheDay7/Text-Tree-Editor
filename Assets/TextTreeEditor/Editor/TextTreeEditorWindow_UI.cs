@@ -6,21 +6,22 @@ using System.Collections.Generic;
 
 public partial class TextTreeEditorWindow : EditorWindow
 {
-    private ObjectField narratorField;
-    private DropdownField nodeActorDropdown;
-    private TextField nodeTextField;
+    private ObjectField narratorField; // Node.cs
+    private DropdownField nodeActorDropdown; // Node.cs
+    private TextField nodeTextField; // Node.cs
     private PropertyField conditionListField;
-    private PropertyField eventListField;
-    private Dictionary<string, NodeElement> nodeElementDict;
-    private TTNarrator narrator;
+    private PropertyField eventListField; // Node.cs, Window.cs
+    private Dictionary<string, NodeElement> nodeElementDict; // Node.cs, Window.cs
+    private TTNarrator narrator; // Node.cs, Window.cs
 
+    // Window.cs
     private void SetUI()
     {
-        SetTTNarratorField();
-        SetNodeActorDropdown();
-        SetTextField();
-        SetConditionListField();
-        SetEventListField();
+        InitTTNarratorField();
+        InitNodeActorDropdown();
+        InitTextField();
+        InitConditionListField();
+        InitEventListField();
 
         SaveTextTreeButtonEvent();
 
@@ -30,14 +31,14 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     #region Allocate element
 
-    private void SetTTNarratorField()
+    private void InitTTNarratorField()
     {
         narratorField = rootVisualElement.Q<ObjectField>("NarratorField");
         if (narratorField == null) Debug.LogError("TextTreeManagerField not found");
         narratorField.objectType = typeof(TTNarrator);
     }
 
-    private void SetNodeActorDropdown()
+    private void InitNodeActorDropdown()
     {
         nodeActorDropdown = rootVisualElement.Q<DropdownField>("NodeActorDropdown");
         if (nodeActorDropdown == null) Debug.LogError("NodeActorDropdown not found");
@@ -51,7 +52,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         nodeActorDropdown.style.display = DisplayStyle.None;
     }
 
-    private void SetTextField()
+    private void InitTextField()
     {
         nodeTextField = rootVisualElement.Q<TextField>("NodeText");
         if (nodeTextField == null) Debug.LogError("NodeText not found");
@@ -65,13 +66,13 @@ public partial class TextTreeEditorWindow : EditorWindow
         nodeTextField.style.display = DisplayStyle.None;
     }
 
-    private void SetConditionListField()
+    private void InitConditionListField()
     {
         conditionListField = rootVisualElement.Q<PropertyField>("ConditionListField");
         if (conditionListField == null) Debug.LogError("ConditionField not found");
     }
 
-    private void SetEventListField()
+    private void InitEventListField()
     {
         eventListField = rootVisualElement.Q<PropertyField>("EventListField");
         if (eventListField == null) Debug.LogError("EventField not found");
@@ -173,6 +174,7 @@ public partial class TextTreeEditorWindow : EditorWindow
 
     #region Init / Deselect Field
 
+    // Edge.cs, Node.cs
     private void InitEventField(List<TTDEvent> eventList)
     {
         if (tempEventSO != null) DestroyImmediate(tempEventSO);
@@ -185,6 +187,7 @@ public partial class TextTreeEditorWindow : EditorWindow
         eventListField.BindProperty(propertyToBind);
     }
 
+    // Edge.cs, Node.cs
     private void ResetEventField()
     {
         if (tempEventSO != null) DestroyImmediate(tempEventSO);
