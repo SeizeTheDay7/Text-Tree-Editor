@@ -16,10 +16,17 @@ public class Serialization<T>
     }
 }
 
+public enum NodeType
+{
+    Text,
+    Choice
+}
+
 [Serializable]
 public class TextNodeData
 {
     public string key;
+    public NodeType type;
     public string actorName;
     public string text;
     public Vector2 position;

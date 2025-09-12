@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public partial class TextTreeEditorWindow : EditorWindow
 {
     private ObjectField narratorField; // Node.cs
+    private DropdownField nodeTypeDropdown;
     private DropdownField nodeActorDropdown; // Node.cs
     private TextField nodeTextField; // Node.cs
     private PropertyField conditionListField;
@@ -18,6 +19,7 @@ public partial class TextTreeEditorWindow : EditorWindow
     private void SetUI()
     {
         InitTTNarratorField();
+        InitNodeTypeDropdown();
         InitNodeActorDropdown();
         InitTextField();
         InitConditionListField();
@@ -36,6 +38,22 @@ public partial class TextTreeEditorWindow : EditorWindow
         narratorField = rootVisualElement.Q<ObjectField>("NarratorField");
         if (narratorField == null) Debug.LogError("TextTreeManagerField not found");
         narratorField.objectType = typeof(TTNarrator);
+    }
+
+    private void InitNodeTypeDropdown()
+    {
+        nodeTypeDropdown = rootVisualElement.Q<DropdownField>("NodeTypeDropdown");
+        if (nodeTypeDropdown == null) Debug.LogError("NodeTypeDropdown not found");
+
+        nodeTypeDropdown.choices = new List<string> { "Text", "Choice" };
+        nodeTypeDropdown.RegisterValueChangedCallback(evt =>
+        {
+            if (currentSelectNode == null) return;
+            if (evt.newValue == "Text") currentSelectNode.UpdateNodeType(NodeType.Text);
+            else if (evt.newValue == "Choice") currentSelectNode.UpdateNodeType(NodeType.Choice);
+        });
+
+        nodeTypeDropdown.style.display = DisplayStyle.None;
     }
 
     private void InitNodeActorDropdown()

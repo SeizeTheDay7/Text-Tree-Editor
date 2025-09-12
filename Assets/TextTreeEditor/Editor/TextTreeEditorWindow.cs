@@ -74,14 +74,11 @@ public partial class TextTreeEditorWindow : EditorWindow
     public List<string> GetTTActorNameList()
     {
         var actorList = narrator.actorList.Select(actor => actor.actorName).ToList();
-        actorList.Insert(0, "_Narrator");
         return actorList;
     }
 
     public List<string> GetTTEventNameList(string actorName)
     {
-        if (actorName == "_Narrator") { return narrator.eventList.Select(e => e.eventName).ToList(); }
-
         TTActor actor = narrator.actorList.FirstOrDefault(a => a.actorName == actorName);
         if (actor == null) return new List<string>();
         List<string> eventNameList = actor.eventList.Select(e => e.eventName).ToList();

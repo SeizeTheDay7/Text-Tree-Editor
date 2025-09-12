@@ -97,11 +97,6 @@ public class TextNarrationManager : MonoBehaviour
     {
         foreach (TTDEvent ttevent in currentNode.nodeEventList)
         {
-            if (ttevent.actorName == "_Narrator")
-            {
-                narrator.InvokeTTEvent(ttevent.eventName);
-                break;
-            }
             foreach (TTActor actor in narrator.actorList)
             {
                 if (actor.actorName == ttevent.actorName)

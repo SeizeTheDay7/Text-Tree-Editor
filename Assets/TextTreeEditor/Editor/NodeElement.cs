@@ -88,4 +88,11 @@ internal sealed class NodeElement : VisualElement
         var actorNameLabel = this.Q<Label>("actorname-label");
         actorNameLabel.text = name;
     }
+
+    public void UpdateNodeType(NodeType type)
+    {
+        textNodeData.type = type;
+
+        // TODO :: Set different color to the node
+    }
 }

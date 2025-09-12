@@ -9,7 +9,6 @@ public partial class TextTreeEditorWindow : EditorWindow
 {
     bool isNodeMoving = false; // Window.cs
 
-
     // Window.cs
     /// <summary>
     /// Add node at the cursor point (or init point if there's no visible cursor)
@@ -116,6 +115,8 @@ public partial class TextTreeEditorWindow : EditorWindow
 
         nodeTextField.style.display = DisplayStyle.Flex;
         nodeTextField.value = currentSelectNode.textNodeData.text;
+        nodeTypeDropdown.style.display = DisplayStyle.Flex;
+        nodeTypeDropdown.value = currentSelectNode.textNodeData.type.ToString();
         nodeActorDropdown.style.display = DisplayStyle.Flex;
         nodeActorDropdown.value = currentSelectNode.textNodeData.actorName;
 

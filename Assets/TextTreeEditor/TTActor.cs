@@ -5,7 +5,18 @@ using UnityEngine.Events;
 public class TTActor : MonoBehaviour
 {
     public string actorName;
+    public string teamName;
     public List<TTEvent> eventList;
+
+    void Awake()
+    {
+
+    }
+
+    private void SetUpTTEvents()
+    {
+        // TODO :: eventList 대신 dictionary로 캐싱
+    }
 
     public void InvokeTTEvent(string eventName)
     {
